@@ -1,0 +1,30 @@
+{
+	"/": [
+		"src/routes/+page.server.js"
+	],
+	"/api/load": [
+		"src/routes/api/load/+server.js"
+	],
+	"/api/[year]": [
+		"src/routes/api/[year]/+server.js"
+	],
+	"/api/[year]/[month]": [
+		"src/routes/api/[year]/[month]/+server.js"
+	],
+	"/api/[year]/[month]/total": [
+		"src/routes/api/[year]/[month]/total/+server.js"
+	],
+	"/api/[year]/[month]/[day]": [
+		"src/routes/api/[year]/[month]/[day]/+server.js"
+	],
+	"/api/[year]/[month]/[day]/total": [
+		"src/routes/api/[year]/[month]/[day]/total/+server.js"
+	],
+	"/days": [
+		"src/routes/days/+page.server.js"
+	],
+	"/months": [
+		"src/routes/months/+page.server.js"
+	],
+	"/years": []
+}
