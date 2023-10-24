@@ -15,7 +15,7 @@ export const dictionary = {
 		"/": [~2],
 		"/days": [~3],
 		"/months": [~4],
-		"/years": [5]
+		"/years": [~5]
 	};
 
 export const hooks = {

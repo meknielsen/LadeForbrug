@@ -1,12 +1,8 @@
 <script>
     
-
+    import Year from '$lib/components/Year.svelte'
     export let data;
-
-    
 
 </script>
 
-{#each data.years['2023']['06']['10'] as hour}
-    <p>{hour.price}</p>
-{/each}
+<Year {data}/>

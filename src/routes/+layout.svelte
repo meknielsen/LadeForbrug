@@ -1,33 +1,37 @@
 <script>
-    import Icon from '@iconify/svelte';
+    import TopAppBar, { Row, Section, Title } from '@smui/top-app-bar';
+    import IconButton from '@smui/icon-button';
 </script>
 
 <style>
 </style>
 
-<div class="container">
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-        <a class="navbar-item" href=".">
-            <Icon icon="mdi:home-battery-outline" style="font-size: 36px" />
-        </a>
-        </div>
+<div class="flexy">
+    <div class="top-app-bar-container flexor">
+      <TopAppBar
+        variant="static"
+        
+        color='secondary'
+      >
+        <Row>
+          <Section>
+            <Title>Ladeforbrug</Title>
+            <div class="spacer"></div>
+            <IconButton class="material-icons" href="/years">calendar_month</IconButton>
+            <IconButton class="material-icons" href="/months">date_range</IconButton>
+            <IconButton class="material-icons" href="/days">today</IconButton>
+          </Section>
+          <Section align="end" toolbar>
+            <IconButton class="material-icons">settings</IconButton>
+            <IconButton class="material-icons" aria-label="Bookmark this page"
+              >bookmark</IconButton
+            >
+          </Section>
+        </Row>
+      </TopAppBar>
+      <div class="flexor-content">
+        <slot />
+      </div>
+    </div>
+</div>
 
-        <div id="navbarCharging" class="navbar-menu">
-            <div class="navbar-start">
-                <a class="navbar-item" href="/years">
-                    Years
-                </a>
-                <a class="navbar-item" href="/months">
-                    Months
-                </a>
-                <a class="navbar-item" href="/days">
-                    Days
-                </a>
-            </div>
-            <div class="navbar-end">    
-            </div>
-        </div>
-    </nav>
-    <slot />
-</div>  

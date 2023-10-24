@@ -3,7 +3,7 @@
 
 import { db } from '$lib/db.js';
 
-export async function load({ fetch }) {
+export async function load({}) {
 
 	const years = await db.getData(`/`);
 
@@ -11,3 +11,5 @@ export async function load({ fetch }) {
 		years
 	};
 }
+
+// should not be needed since all the logic happens in subfolders

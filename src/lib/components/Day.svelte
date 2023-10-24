@@ -1,25 +1,31 @@
 <script>
+// @ts-nocheck
+
 	/** @type {import('./$types').PageData} */
 
-	import {_view, _day} from '$lib/stores.js';
+	import {_view} from '$lib/stores.js';
 	import Chart from "$lib/components/Chart.svelte";
-	import {getChartDayData, totalDay} from '$lib/chartData.js';
+	import {getChartDayData} from '$lib/chartData.js';
 	import Icon from '@iconify/svelte';
 
+	import LayoutGrid , { Cell } from '@smui/layout-grid';
+	import Button, { Label } from '@smui/button';
+	
     export let data;
 
 	let view = $_view;
-    // let current = $_day;
 	let year = view.year;
 	let month = view.month;
 	let day = view.day;
-	// let day = $_day;
+
+	console.log(year + ' ' + month + ' ' + day)
 
 	let labels, chartdata, first, title_date;
 
-	let detail_link = '00';
+	// let detail_link;
+
 	let current = day;
-	let label = year;
+	// let label = year;
 	let date = new Date(year, month, 0);
 	let title = 'Strømforbrug hver time';
     let last = date.getDate();
@@ -72,6 +78,8 @@
 
 	let dayChart = (c) => {
 		if ( c.length === 0) {c = '01'}
+		console.log(`${year}/${month}/${c}`)
+		console.log(data.years['2023'].hasOwnProperty(`${month}`))
 		let d = getChartDayData(data.years[`${year}`][`${month}`][`${c}`], 0);
 		chartdata = d[0];
 		labels = d[1];
@@ -94,17 +102,63 @@
     .chart-spacer {
         padding-top: 0px;
     }
-	.section {
-		padding-top: 10px;
-		padding-bottom: 10px;
+	:global(.nav) {
+		min-width: 32px;
+		padding: 2px;
+		margin: 2px;
 	}
+	:global(.cell-align-right) {
+		text-align: right;
+	}
+	.center {
+	margin: auto;
+	width: 70%;
+	padding: 1px;
+	text-align: center;
+	}
+	.pagination {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+  	}
 </style>
 
-<section class="section">
-	<Chart {chartdata} {labels} label={title_date} {title} bind:detail_link/>
-</section>
 
-<section class="section slim-section">
+<LayoutGrid>
+	<Cell span={12}>
+		<Chart {chartdata} {labels} label={title_date} {title}  />
+	</Cell>
+</LayoutGrid>
+
+<LayoutGrid>
+	<Cell span={1}></Cell>
+	<Cell align="left" span={1}>
+		<div class="pagination">
+			<Button variant="outlined" color="secondary" href={null} on:click={() => previous_page()} on:keydown={() => previous_page()} disabled = {pp_disabled}><Label><Icon icon="mdi:chevron-double-left" style="font-size: 16px"/></Label></Button>
+			<Button variant="outlined" color="secondary" href={null} on:click={() => previous()} on:keydown={() => previous()} disabled = {p_disabled}><Label><Icon icon="mdi:chevron-left" style="font-size: 16px"/></Label></Button>
+		</div>
+	</Cell>
+	<Cell span={8}>
+			<div class="center">
+					{#each Array(9) as _, index (index)}
+					{#if index + first <= last}
+						<Button variant="{current === toLabel(index+first) ? 'raised' : 'outlined'}" color="secondary" class="myClass" href={null} on:click={() => (current = toLabel(index+first))}><Label>{toLabel(index+first) }</Label></Button>
+						<!-- <li><a class="pagination-link {current === toLabel(index+first) ? 'is-current' : ''}" on:click={() => (current = toLabel(index+first))} on:keydown={() => (current = toLabel(index+first))} href={null}>{toLabel(index+first) }</a></li> -->
+					{/if}
+				{/each}
+			</div>
+	</Cell>
+	<Cell span={1}>
+		<div class="pagination">
+			<Button variant="outlined" color="secondary" href={null} on:click={() => next()} on:keydown={() => next()} disabled = {n_disabled}><Label><Icon icon="mdi:chevron-right" style="font-size: 16px"/></Label></Button>
+			<Button variant="outlined" color="secondary" href={null} on:click={() => next_page()} on:keydown={() => next_page()} disabled = {np_disabled}><Label><Icon icon="mdi:chevron-double-right" style="font-size: 16px"/></Label></Button>
+		</div>
+	</Cell>
+	<Cell span={1}></Cell>
+</LayoutGrid>
+
+<!-- <section class="section slim-section">
 	<div class="chart-spacer">
 		<nav class="pagination is-small is-centered" aria-label="pagination">
 			<ul class="pagination-list">
@@ -120,7 +174,7 @@
 			</ul>
 		</nav>
 	</div>
-</section>
+</section> -->
 
 
 

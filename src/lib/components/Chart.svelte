@@ -1,4 +1,5 @@
 <script>
+// @ts-nocheck
 
     import {_view} from '$lib/stores.js';
     import Chart from 'chart.js/auto';
@@ -61,7 +62,7 @@
                                     // label = 'test';
                                     label += new Intl.NumberFormat('da-DK', { style: 'currency', currency: 'DKK' }).format(context.parsed.y);
                                     context.parsed.x + 1 < 10 ? y_value = '0' + (context.parsed.x + 1) : y_value = '' + (context.parsed.x + 1);
-                                    // console.log(y_value);
+                                    console.log(y_value);
                                     detail_link = y_value;
                                 }
                                 return label;
@@ -92,6 +93,7 @@
     
     $: detail_link = 'day' ? $_view.day = y_value.toString() : $_view.day = '01' ;
     $: detail_link = 'month' ? $_view.day = y_value.toString() : $_view.month = '06' ;
+    // $: detail_link = 'year' ? $_view.month = y_value.toString() : $_view.month = '06' ;
     
 </script>
 

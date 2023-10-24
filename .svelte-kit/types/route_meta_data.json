@@ -26,5 +26,7 @@
 	"/months": [
 		"src/routes/months/+page.server.js"
 	],
-	"/years": []
+	"/years": [
+		"src/routes/years/+page.server.js"
+	]
 }

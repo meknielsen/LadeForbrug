@@ -7,12 +7,23 @@
 		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch"
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
+		"prepare": "npm run smui-theme-light && npm run smui-theme-dark",
+		"smui-theme-light": "smui-theme compile static/smui.css -i src/theme",
+		"smui-theme-dark": "smui-theme compile static/smui-dark.css -i src/theme/dark"
 	},
 	"devDependencies": {
 		"@iconify/svelte": "^3.1.4",
+		"@material/typography": "^14.0.0",
+		"@smui/button": "^7.0.0-beta.15",
+		"@smui/card": "^7.0.0-beta.15",
+		"@smui/icon-button": "^7.0.0-beta.15",
+		"@smui/layout-grid": "^7.0.0-beta.15",
+		"@smui/paper": "^7.0.0-beta.15",
+		"@smui/top-app-bar": "^7.0.0-beta.15",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.5.0",
+		"smui-theme": "^7.0.0-beta.15",
 		"svelte": "^3.54.0",
 		"svelte-check": "^3.0.1",
 		"vite": "^4.0.0"
@@ -23,6 +34,7 @@
 		"csv": "^6.3.1",
 		"node-json-db": "^2.2.0",
 		"sqlite3": "^5.1.6",
-		"svelte-chartjs": "^3.1.2"
+		"svelte-chartjs": "^3.1.2",
+		"svelte-material-ui": "^7.0.0-beta.15"
 	}
 }
