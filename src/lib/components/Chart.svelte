@@ -4,11 +4,11 @@
     import {_view} from '$lib/stores.js';
     import Chart from 'chart.js/auto';
     import { onMount } from 'svelte';
+    import { numberString } from '$lib/utils.js';
  
     export let chartdata, labels, label, title, detail_link;
 
     let myChart, y_value = '';
-    $_view.day = '01';
 
     onMount(async () => {
         window.addEventListener('resize', function () { myChart.resize() });
@@ -62,7 +62,7 @@
                                     // label = 'test';
                                     label += new Intl.NumberFormat('da-DK', { style: 'currency', currency: 'DKK' }).format(context.parsed.y);
                                     context.parsed.x + 1 < 10 ? y_value = '0' + (context.parsed.x + 1) : y_value = '' + (context.parsed.x + 1);
-                                    console.log(y_value);
+                                    // console.log('y_value from Chart: ' + y_value);
                                     detail_link = y_value;
                                 }
                                 return label;
@@ -91,9 +91,17 @@
         }
     }
     
-    $: detail_link = 'day' ? $_view.day = y_value.toString() : $_view.day = '01' ;
-    $: detail_link = 'month' ? $_view.day = y_value.toString() : $_view.month = '06' ;
+    // $: detail_link = 'day' ? $_view.day = y_value.toString() : $_view.day = '01' ;
+    // $: detail_link = 'month' ? $_view.day = y_value.toString() : $_view.month = '06' ;
     // $: detail_link = 'year' ? $_view.month = y_value.toString() : $_view.month = '06' ;
+
+    // $: console.log('Chart detail_link: ' + detail_link)
+
+    // detail_link = 'no'
+
+    // $: if ( mode === 'year' ) $_view.month = y_value.toString();
+    // $: if ( mode === 'month' ) $_view.day = y_value.toString();
+    // $: if ( mode === 'day' ) $_view.day = y_value.toString();
     
 </script>
 

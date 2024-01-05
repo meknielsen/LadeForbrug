@@ -11,18 +11,16 @@
 	import LayoutGrid , { Cell } from '@smui/layout-grid';
 	import Button, { Label } from '@smui/button';
 	
-    export let data;
+    export let data, detail_link;
 
 	let view = $_view;
 	let year = view.year;
 	let month = view.month;
 	let day = view.day;
 
-	console.log(year + ' ' + month + ' ' + day)
+	// console.log(view)
 
 	let labels, chartdata, first, title_date;
-
-	// let detail_link;
 
 	let current = day;
 	// let label = year;
@@ -78,8 +76,8 @@
 
 	let dayChart = (c) => {
 		if ( c.length === 0) {c = '01'}
-		console.log(`${year}/${month}/${c}`)
-		console.log(data.years['2023'].hasOwnProperty(`${month}`))
+		// console.log(`${year}/${month}/${c}`)
+		// console.log(data.years['2023'].hasOwnProperty(`${month}`))
 		let d = getChartDayData(data.years[`${year}`][`${month}`][`${c}`], 0);
 		chartdata = d[0];
 		labels = d[1];
@@ -99,9 +97,6 @@
 </script>
 
 <style>
-    .chart-spacer {
-        padding-top: 0px;
-    }
 	:global(.nav) {
 		min-width: 32px;
 		padding: 2px;
@@ -112,7 +107,7 @@
 	}
 	.center {
 	margin: auto;
-	width: 70%;
+	width: 80%;
 	padding: 1px;
 	text-align: center;
 	}
@@ -122,12 +117,22 @@
 		align-items: center;
 		width: 100%;
   	}
+	.arrows {
+		padding: 2px;
+	}
+	.graph {
+		width: 80%;
+		margin: 0 auto;
+		padding-top: 5%;
+	}
 </style>
 
 
 <LayoutGrid>
 	<Cell span={12}>
-		<Chart {chartdata} {labels} label={title_date} {title}  />
+		<div class='graph'>
+			<Chart {chartdata} {labels} label={title_date} {title} bind:detail_link/>
+		</div>
 	</Cell>
 </LayoutGrid>
 
@@ -135,8 +140,12 @@
 	<Cell span={1}></Cell>
 	<Cell align="left" span={1}>
 		<div class="pagination">
+			<div class='arrows'>
 			<Button variant="outlined" color="secondary" href={null} on:click={() => previous_page()} on:keydown={() => previous_page()} disabled = {pp_disabled}><Label><Icon icon="mdi:chevron-double-left" style="font-size: 16px"/></Label></Button>
+			</div>
+			<div class='arrows'>
 			<Button variant="outlined" color="secondary" href={null} on:click={() => previous()} on:keydown={() => previous()} disabled = {p_disabled}><Label><Icon icon="mdi:chevron-left" style="font-size: 16px"/></Label></Button>
+			</div>
 		</div>
 	</Cell>
 	<Cell span={8}>
@@ -151,8 +160,12 @@
 	</Cell>
 	<Cell span={1}>
 		<div class="pagination">
+			<div class='arrows'>
 			<Button variant="outlined" color="secondary" href={null} on:click={() => next()} on:keydown={() => next()} disabled = {n_disabled}><Label><Icon icon="mdi:chevron-right" style="font-size: 16px"/></Label></Button>
+			</div>
+			<div class='arrows'>
 			<Button variant="outlined" color="secondary" href={null} on:click={() => next_page()} on:keydown={() => next_page()} disabled = {np_disabled}><Label><Icon icon="mdi:chevron-double-right" style="font-size: 16px"/></Label></Button>
+			</div>
 		</div>
 	</Cell>
 	<Cell span={1}></Cell>

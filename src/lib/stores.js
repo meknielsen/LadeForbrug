@@ -1,6 +1,5 @@
 // @ts-nocheck
 import { writable } from 'svelte/store';
-import { db } from './db.js';
 
 let today = new Date();
 let year = '2023';
@@ -15,7 +14,7 @@ month == 0 ? month = 12 : month = month; // make sure December is returned if in
 month == 12 ? year = today.getFullYear() - 1 : year = today.getFullYear();
 month < 10 ? month = '0' + month : '' + month; // convert to String representation
 
-console.log('Stores: ' + month)
+// console.log('Stores: ' + month)
 
 // month = '06'
 
@@ -26,11 +25,5 @@ export const _view = writable({
     // today.toLocaleDateString('da-DK', {day: '2-digit'}).slice(0, -1)
 }) 
 
-// export async function load({}) {
-
-// 	const data = await db.getData(`/`);
-
-// 	return {
-// 		data
-// 	};
-// }
+export const _data = writable({})
+export const active = writable()

@@ -9,8 +9,9 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
 		"prepare": "npm run smui-theme-light && npm run smui-theme-dark",
-		"smui-theme-light": "smui-theme compile static/smui.css -i src/theme",
-		"smui-theme-dark": "smui-theme compile static/smui-dark.css -i src/theme/dark"
+		"smui-theme-light": "smui-theme compile static/smui-light.css -i src/theme",
+		"smui-theme-dark": "smui-theme compile static/smui-dark.css -i src/theme/dark",
+		"theme": "npm run smui-theme-light && npm run smui-theme-dark"
 	},
 	"devDependencies": {
 		"@iconify/svelte": "^3.1.4",
@@ -20,6 +21,7 @@
 		"@smui/icon-button": "^7.0.0-beta.15",
 		"@smui/layout-grid": "^7.0.0-beta.15",
 		"@smui/paper": "^7.0.0-beta.15",
+		"@smui/tab-bar": "^7.0.0-beta.16",
 		"@smui/top-app-bar": "^7.0.0-beta.15",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.5.0",

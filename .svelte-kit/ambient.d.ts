@@ -60,6 +60,7 @@ declare module '$env/static/private' {
 	export const npm_config_cache: string;
 	export const npm_config_node_gyp: string;
 	export const PATH: string;
+	export const WSL_PAC_URL: string;
 	export const NODE: string;
 	export const npm_package_name: string;
 	export const WT_SESSION: string;
@@ -150,6 +151,7 @@ declare module '$env/dynamic/private' {
 		npm_config_cache: string;
 		npm_config_node_gyp: string;
 		PATH: string;
+		WSL_PAC_URL: string;
 		NODE: string;
 		npm_package_name: string;
 		WT_SESSION: string;

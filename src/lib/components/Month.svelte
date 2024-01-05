@@ -3,26 +3,24 @@
 
 	import {_view} from '$lib/stores.js';
 	import Chart from "$lib/components/Chart.svelte";
-	import { getChartMonthData, getChartYearData, totalMonth } from '$lib/chartData.js';
+	import { getChartMonthData, getChartYearData, getLatestDataDate, totalMonth } from '$lib/chartData.js';
 	import Icon from '@iconify/svelte';
+	import {active} from '$lib/stores.js';
 
 	import Button, { Label } from '@smui/button';
-	// import Card, { Content } from '@smui/card';
 	import LayoutGrid, { Cell } from '@smui/layout-grid';
 	import Paper, { Title, Content } from '@smui/paper';
 
-    export let data;
+    export let data, detail_link;
 
 	let view = $_view;
-
+	// console.log($_view)
 	let year = view.year;
 	let month = view.month;
 	let day = view.day;
 
 	let labels, chartdata;
-	
-	let detail_link = 'month';
-	// let label = year;
+
 	let date = new Date(year, month, 0);
     let title = 'Strømforbrug dagligt';
 	// let first = 1;
@@ -40,7 +38,7 @@
 
 	// current = toLabel(Number(month));
 	current = month;
-	console.log('current is: ' + current)
+	// console.log('current is: ' + current)
 
 	let next = () => {
 		current = toLabel(Number(current)+1);
@@ -52,24 +50,34 @@
 
 	let getTitleDate = (m) => {
 		date.setMonth(Number(m)-1);
-		console.log('getTitleDate: (' + m + ')' + date.toLocaleDateString('da-DK', {year: 'numeric', month: 'long'}))
+		// console.log('getTitleDate: (' + m + ')' + date.toLocaleDateString('da-DK', {year: 'numeric', month: 'long'}))
 		return date.toLocaleDateString('da-DK', {year: 'numeric', month: 'long'});
 	}
 
 	let monthChart = (m) => {
-		let d = getChartMonthData(data.years[`${year}`][`${m}`]);
-		console.log(d[0])
+		let d = getChartMonthData(data.years, `${year}`, `${m}`);
+		// console.log(d[0])
 		chartdata = d[0];
 		labels = d[1];
-		$_view.month = '' + m;
+		// $_view.month = '' + m;
 		title_date = getTitleDate(`${m}`);
-		console.log('total_month (in Month): ' + `${year}/${m}`)
-		// total_month = totalMonth(data.years[`${year}`][`${m}`])
+		// console.log('total_month (in Month): ' + `${year}/${m}`)
+		total_month = totalMonth(data.years, `${year}`, `${m}`)
         if ( m >= 12 ) {n_disabled = true;} else {n_disabled = undefined;}
 		if ( m <= 1 ) {p_disabled = true;} else {p_disabled = undefined;}
 	}
 
+	let setDay = (d) => {
+		if ( d  === undefined ) {
+			d = getLatestDataDate(data.years).latestDay;
+		}
+		
+		view.day = d;
+	}
+
 	$: monthChart(current);
+	$: setDay(detail_link);
+	// $: console.log(view);
 
 </script>
 
@@ -83,7 +91,7 @@
   	}
 	.center {
 	margin: auto;
-	width: 50%;
+	width: 100%;
 	padding: 1px;
 	text-align: center;
 	}
@@ -101,6 +109,11 @@
 		align-items: center;
 		width: 100%;
   	}
+	.graph {
+		width: 80%;
+		margin: 0 auto;
+		padding-top: 5%;
+	}
 </style>
 
 <LayoutGrid>
@@ -132,9 +145,9 @@
 
 <LayoutGrid>
 	<Cell span={12}>
-		<a href = '/days'>
+		<div class='graph' on:click={() => ($active='day')} on:keydown={() => ($active='day')}>
 			<Chart {chartdata} {labels} label={title_date} {title} bind:detail_link/>
-		</a>
+		</div>
 	</Cell>
 </LayoutGrid>
 
