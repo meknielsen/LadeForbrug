@@ -3,10 +3,9 @@
 
 	/** @type {import('./$types').PageData} */
 
-	import {_view} from '$lib/stores.js';
 	import Chart from "$lib/components/Chart.svelte";
 	import { getChartYearData, getLatestDataDate, totalYear } from '$lib/chartData.js';
-	import {active} from '$lib/stores.js';
+	import {_view, _active, _treshold} from '$lib/stores.js';
 	import Button, { Label } from '@smui/button';
 	import LayoutGrid, { Cell } from '@smui/layout-grid';
 
@@ -43,14 +42,23 @@
 
 	let setYear = (y) => {
 		year = y;
-		console.log(year)
-		console.log(month)
+
+		// console.log(year)
+		// console.log(month)
+	}
+
+	let isDisabled = (y) => {
+		return y !== year;
+	}
+
+	let getVariant = () => {
+		return "outlined";
 	}
 	
 	$: yearChart(year);
 	$: setMonth(detail_link);
 
-	console.log(totalYear(data.years, 2023))
+	// console.log(totalYear(data.years, 2023))
 
 	// console.log(Object.keys(data.years).length)
 
@@ -68,11 +76,16 @@
 		padding: 1px;
 		text-align: center;
 	}
+	:global(.nav) {
+		min-width: 32px;
+		padding: 2px;
+		margin: 2px;
+	}
 </style>
 
 <LayoutGrid>
 	<Cell span={12}>
-		<div class='graph' on:click={() => ($active='month')} on:keydown={() => ($active='month')}>
+		<div class='graph' on:click={() => ($_active='month')} on:keydown={() => ($_active='month')}>
 			<Chart {chartdata} {labels} label={title_date} {title} bind:detail_link/>
 		</div>
 	</Cell>
@@ -83,7 +96,7 @@
 		<Cell span={8}>
 			<div class="center">
 				{#each Object.keys(data.years) as y}
-					<Button variant="outlined" color="secondary" class="nav" href={null} on:click={() => setYear(y)} on:keydown={() => setYear(y)}><Label>{y}</Label></Button>
+					<Button variant="{year === y ? 'raised' : 'outlined'}" color="secondary" class="nav" href={null} on:click={() => setYear(y)} on:keydown={() => setYear(y)}><Label>{y}</Label></Button>
 				{/each}
 			</div>
 		</Cell>

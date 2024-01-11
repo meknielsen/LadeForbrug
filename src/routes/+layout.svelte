@@ -3,7 +3,7 @@
   import TopAppBar, { Row, Section, Title } from '@smui/top-app-bar';
   import IconButton from '@smui/icon-button';
   import { onMount } from 'svelte';
-  import { active } from '$lib/stores.js';
+  import { _active } from '$lib/stores.js';
 
   let darkTheme;
 
@@ -13,9 +13,9 @@
 
   const toggleMode = () => (darkTheme = !darkTheme);
 
-  $active = 'year';
+  $_active = 'year';
   let activeView = (s) => {
-    $active = s;
+    $_active = s;
     // console.log($active);
   }
 

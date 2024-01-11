@@ -5,7 +5,7 @@
     import Year from '$lib/components/Year.svelte'
     import Month from '$lib/components/Month.svelte'
     import Day from '$lib/components/Day.svelte'
-    import {_data, _view, active} from '$lib/stores.js';
+    import {_data, _view, _active} from '$lib/stores.js';
     import { getChartYearData, getLatestDataDate } from '$lib/chartData.js';
 
     export let data;
@@ -27,12 +27,12 @@
     <div>{p.price}</div>
 {/each} -->
 
-{#if $active === 'year'}
+{#if $_active === 'year'}
     <Year data={$_data} bind:detail_link/>
 {/if}
-{#if $active === 'month'}
+{#if $_active === 'month'}
     <Month data={$_data} bind:detail_link/>
 {/if}
-{#if $active === 'day'}
+{#if $_active === 'day'}
     <Day data={$_data} bind:detail_link/>
 {/if}

@@ -1,12 +1,10 @@
 <script>
 // @ts-nocheck
 
-	import {_view} from '$lib/stores.js';
 	import Chart from "$lib/components/Chart.svelte";
 	import { getChartMonthData, getChartYearData, getLatestDataDate, totalMonth } from '$lib/chartData.js';
 	import Icon from '@iconify/svelte';
-	import {active} from '$lib/stores.js';
-
+	import {_view, _active, _treshold} from '$lib/stores.js';
 	import Button, { Label } from '@smui/button';
 	import LayoutGrid, { Cell } from '@smui/layout-grid';
 	import Paper, { Title, Content } from '@smui/paper';
@@ -84,11 +82,6 @@
 <style lang="scss">
     @import '$lib/scss/_Typography.scss';
 
-	.flex-div {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-  	}
 	.center {
 	margin: auto;
 	width: 100%;
@@ -105,9 +98,11 @@
 	}
 	.pagination {
 		display: flex;
-		justify-content: center;
 		align-items: center;
 		width: 100%;
+		min-width: 100px;
+		padding: 1px;
+		margin: 0px;
   	}
 	.graph {
 		width: 80%;
@@ -145,7 +140,7 @@
 
 <LayoutGrid>
 	<Cell span={12}>
-		<div class='graph' on:click={() => ($active='day')} on:keydown={() => ($active='day')}>
+		<div class='graph' on:click={() => ($_active='day')} on:keydown={() => ($_active='day')}>
 			<Chart {chartdata} {labels} label={title_date} {title} bind:detail_link/>
 		</div>
 	</Cell>
@@ -155,7 +150,7 @@
 	<Cell span={1}></Cell>
 	<Cell align="left" span={1}>
 		<div class="pagination">
-			<Button variant="outlined" color="secondary" href={null} on:click={() => previous()} on:keydown={() => previous()} disabled = {p_disabled}><Label>Previous</Label></Button>
+			<Button variant="outlined" color="secondary" class="nav" href={null} on:click={() => previous()} on:keydown={() => previous()} disabled = {p_disabled}><Label>Previous</Label></Button>
 		</div>
 	</Cell>
 	<Cell span={8}>
@@ -167,9 +162,9 @@
 					{/each}
 			</div>
 	</Cell>
-	<Cell span={1}>
+	<Cell align="right" span={1}>
 		<div class="pagination">
-			<Button variant="outlined" color="secondary" href={null} on:click={() => next()} on:keydown={() => next()} disabled = {n_disabled}><Label>Next</Label></Button>
+			<Button variant="outlined" color="secondary" class="nav" href={null} on:click={() => next()} on:keydown={() => next()} disabled = {n_disabled}><Label>Next</Label></Button>
 		</div>
 	</Cell>
 	<Cell span={1}></Cell>
