@@ -3,7 +3,7 @@
 
 	/** @type {import('./$types').PageData} */
 
-	import {_view, _treshold} from '$lib/stores.js';
+	import {_view, _active, _treshold} from '$lib/stores.js';
 	import Chart from "$lib/components/Chart.svelte";
 	import {getChartDayData} from '$lib/chartData.js';
 	import Icon from '@iconify/svelte';
@@ -18,12 +18,9 @@
 	let month = view.month;
 	let day = view.day;
 
-	// console.log(view)
-
 	let labels, chartdata, first, title_date;
 
 	let current = day;
-	// let label = year;
 	let date = new Date(year, month, 0);
 	let title = 'Strømforbrug hver time';
     let last = date.getDate();
@@ -76,8 +73,6 @@
 
 	let dayChart = (c) => {
 		if ( c.length === 0) {c = '01'}
-		// console.log(`${year}/${month}/${c}`)
-		// console.log(data.years['2023'].hasOwnProperty(`${month}`))
 		let d = getChartDayData(data.years[`${year}`][`${month}`][`${c}`], 0);
 		chartdata = d[0];
 		labels = d[1];
@@ -85,7 +80,6 @@
 		current = c;
 
 		if ( Number(current) === 1 ) {p_disabled = true;} else {p_disabled = undefined;}
-
 		if ( (last - Number(current)) < page ) {np_disabled = true;} else {np_disabled = undefined;}
 		if ( Number(current) === last ) {n_disabled = true;} else {n_disabled = undefined;}
 		if ( first === 1 ) {pp_disabled = true;} else {pp_disabled = undefined;}
@@ -93,12 +87,15 @@
 	}
 
 	$: dayChart(current)
+	// $: console.log(current)
+	// $: console.log('year:' + year + ', month:' + month + ', day:' + day)
+	// $: console.log($_view)
 
 </script>
 
 <style>
-	:global(.nav) {
-		min-width: 32px;
+	* :global(.nav) {
+		width: 32px;
 		padding: 2px;
 		margin: 2px;
 	}
@@ -106,10 +103,10 @@
 		text-align: right;
 	}
 	.center {
-	margin: auto;
-	width: 80%;
-	padding: 1px;
-	text-align: center;
+		margin: auto;
+		width: 80%;
+		padding: 1px;
+		text-align: center;
 	}
 	.pagination {
 		display: flex;
@@ -130,7 +127,7 @@
 
 <LayoutGrid>
 	<Cell span={12}>
-		<div class='graph'>
+		<div class='graph' on:click={() => ($_active='month')} on:keydown={() => ($_active='month')}>
 			<Chart {chartdata} {labels} label={title_date} {title} bind:detail_link/>
 		</div>
 	</Cell>
@@ -141,10 +138,10 @@
 	<Cell align="left" span={1}>
 		<div class="pagination">
 			<div class='arrows'>
-			<Button variant="outlined" color="secondary" href={null} on:click={() => previous_page()} on:keydown={() => previous_page()} disabled = {pp_disabled}><Label><Icon icon="mdi:chevron-double-left" style="font-size: 16px"/></Label></Button>
+			<Button variant="outlined" color="secondary" class="nav" href={null} on:click={() => previous_page()} on:keydown={() => previous_page()} disabled = {pp_disabled}><Label><Icon icon="mdi:chevron-double-left" style="font-size: 16px"/></Label></Button>
 			</div>
 			<div class='arrows'>
-			<Button variant="outlined" color="secondary" href={null} on:click={() => previous()} on:keydown={() => previous()} disabled = {p_disabled}><Label><Icon icon="mdi:chevron-left" style="font-size: 16px"/></Label></Button>
+			<Button variant="outlined" color="secondary" class="nav" href={null} on:click={() => previous()} on:keydown={() => previous()} disabled = {p_disabled}><Label><Icon icon="mdi:chevron-left" style="font-size: 16px"/></Label></Button>
 			</div>
 		</div>
 	</Cell>
@@ -152,8 +149,7 @@
 			<div class="center">
 					{#each Array(9) as _, index (index)}
 					{#if index + first <= last}
-						<Button variant="{current === toLabel(index+first) ? 'raised' : 'outlined'}" color="secondary" class="myClass" href={null} on:click={() => (current = toLabel(index+first))}><Label>{toLabel(index+first) }</Label></Button>
-						<!-- <li><a class="pagination-link {current === toLabel(index+first) ? 'is-current' : ''}" on:click={() => (current = toLabel(index+first))} on:keydown={() => (current = toLabel(index+first))} href={null}>{toLabel(index+first) }</a></li> -->
+						<Button variant="{current === toLabel(index+first) ? 'raised' : 'outlined'}" color="secondary" class="nav" href={null} on:click={() => (current = toLabel(index+first))}><Label>{toLabel(index+first) }</Label></Button>
 					{/if}
 				{/each}
 			</div>
@@ -161,33 +157,15 @@
 	<Cell span={1}>
 		<div class="pagination">
 			<div class='arrows'>
-			<Button variant="outlined" color="secondary" href={null} on:click={() => next()} on:keydown={() => next()} disabled = {n_disabled}><Label><Icon icon="mdi:chevron-right" style="font-size: 16px"/></Label></Button>
+			<Button variant="outlined" color="secondary" class="nav" href={null} on:click={() => next()} on:keydown={() => next()} disabled = {n_disabled}><Label><Icon icon="mdi:chevron-right" style="font-size: 16px"/></Label></Button>
 			</div>
 			<div class='arrows'>
-			<Button variant="outlined" color="secondary" href={null} on:click={() => next_page()} on:keydown={() => next_page()} disabled = {np_disabled}><Label><Icon icon="mdi:chevron-double-right" style="font-size: 16px"/></Label></Button>
+			<Button variant="outlined" color="secondary"  class="nav"href={null} on:click={() => next_page()} on:keydown={() => next_page()} disabled = {np_disabled}><Label><Icon icon="mdi:chevron-double-right" style="font-size: 16px"/></Label></Button>
 			</div>
 		</div>
 	</Cell>
 	<Cell span={1}></Cell>
 </LayoutGrid>
-
-<!-- <section class="section slim-section">
-	<div class="chart-spacer">
-		<nav class="pagination is-small is-centered" aria-label="pagination">
-			<ul class="pagination-list">
-				<li><a class="pagination-link" on:click={() => previous_page()} on:keydown={() => previous_page()} disabled = {pp_disabled} href={null}><Icon icon="mdi:chevron-double-left" style="font-size: 16px"/></a></li>
-				<li><a class="pagination-link" on:click={() => previous()} on:keydown={() => previous()} disabled = {p_disabled} href={null}><Icon icon="mdi:chevron-left" style="font-size: 16px"/></a></li>
-				{#each Array(9) as _, index (index)}
-					{#if index + first <= last}
-						<li><a class="pagination-link {current === toLabel(index+first) ? 'is-current' : ''}" on:click={() => (current = toLabel(index+first))} on:keydown={() => (current = toLabel(index+first))} href={null}>{toLabel(index+first) }</a></li>
-					{/if}
-				{/each}
-				<li><a class="pagination-link" on:click={() => next()} on:keydown={() => next()} disabled = {n_disabled} href={null}><Icon icon="mdi:chevron-right" style="font-size: 16px"/></a></li>
-				<li><a class="pagination-link" on:click={() => next_page()} on:keydown={() => next_page()} disabled = {np_disabled} href={null}><Icon icon="mdi:chevron-double-right" style="font-size: 16px"/></a></li>
-			</ul>
-		</nav>
-	</div>
-</section> -->
 
 
 

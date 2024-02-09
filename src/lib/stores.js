@@ -2,7 +2,8 @@
 import { writable } from 'svelte/store';
 
 let today = new Date();
-let year = '2023';
+// let year = '2023';
+let year = today.getFullYear();
 let month = today.getMonth();
 let day = '01';
 
@@ -10,9 +11,13 @@ let day = '01';
 // (where zero indicates the first month of the year).
 // Therefore, this represent previous full month, intended for this store to return when page is loaded first time. 
 
-month == 0 ? month = 12 : month = month; // make sure December is returned if in January
-month == 12 ? year = today.getFullYear() - 1 : year = today.getFullYear();
+// month == 0 ? month = 12 : month = month; // make sure December is returned if in January
+// month == 12 ? year = today.getFullYear() - 1 : year = today.getFullYear();
+
+month = month + 1;
 month < 10 ? month = '0' + month : '' + month; // convert to String representation
+
+
 
 // console.log('Stores: ' + month)
 

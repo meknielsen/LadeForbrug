@@ -5,19 +5,10 @@
 	"/api/load": [
 		"src/routes/api/load/+server.js"
 	],
-	"/api/[year]": [
-		"src/routes/api/[year]/+server.js"
+	"/api/settings": [
+		"src/routes/api/settings/+server.js"
 	],
-	"/api/[year]/[month]": [
-		"src/routes/api/[year]/[month]/+server.js"
-	],
-	"/api/[year]/[month]/total": [
-		"src/routes/api/[year]/[month]/total/+server.js"
-	],
-	"/api/[year]/[month]/[day]": [
-		"src/routes/api/[year]/[month]/[day]/+server.js"
-	],
-	"/api/[year]/[month]/[day]/total": [
-		"src/routes/api/[year]/[month]/[day]/total/+server.js"
+	"/api/settings/[year]": [
+		"src/routes/api/settings/[year]/+server.js"
 	]
 }

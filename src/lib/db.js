@@ -4,6 +4,7 @@ import { parse } from 'csv-parse';
 import { JsonDB, Config } from 'node-json-db';
 
 export var db = new JsonDB(new Config("ChargingData", true, true, '/'));
+export var refusion_db = new JsonDB(new Config("RefusionData", true, true, '/'));
 
 let year;
 let month;
@@ -34,23 +35,6 @@ export function getDB() {
   return db;
 }
 
-export async function getDayTotal(year_month_day) {
-  let total_obj = await db.getData(year_month_day);
-  let total = 0;
-  for (let i = 0; i < total_obj.length; i++) {
-    total += parseFloat(total_obj[i].price.replace(/,/g, '.'));
-  }
-  return total.toFixed;
-}
-
-export async function getMonthTotal(year_month) {
-  let month_obj = await db.getData(year_month);
-  let total_obj = Object.values(month_obj);
-  let total = 0;
-  for ( let j = 0; j < total_obj.length; j++) {
-    for (let i = 0; i < total_obj[j].length; i++) {
-      total += parseFloat(total_obj[j][i].price.replace(/,/g, '.'));
-    }
-  }
-  return total.toFixed(2);
+export function getRefusionDB() {
+  return refusion_db;
 }

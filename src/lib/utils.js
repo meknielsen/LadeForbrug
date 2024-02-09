@@ -50,3 +50,22 @@ const MONTHS_EN = [
   export function numberString(number) {
     return (number<10) ? '0' + number : '' + number;
   }
+
+  export function convertMonthDate(data) {
+    let r = [];
+    for (var i = 0; i < 12; i++) {
+      r[i] = parseFloat(data[i].replace(/,/g, '.')).toFixed(2);
+    }
+    return r;
+  }
+
+  export function subtractRefusion(c, r) {
+    let n = [];
+    for (var i = 0; i < 12; i++) {
+      n[i] = c[i]-r[i]
+    }
+
+    console.log(c.map(function(v, i) {return v - r[i]}))
+
+    return  c.map(function(v, i) {return v - r[i]});
+  }

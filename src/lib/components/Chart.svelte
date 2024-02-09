@@ -15,7 +15,6 @@
     });
 
     function setup(data){
-        
         return  { 
             type: "bar",
             data: {
@@ -25,25 +24,21 @@
                         label,
                         data: data[0],
                         backgroundColor: [
-                            // "rgba(255, 99, 132, 0.2)",
                             "rgba(54, 162, 235, 0.2)",
                         ],
                         borderColor: [
-                            // "rgba(255, 99, 132, 1)",
                             "rgba(54, 162, 235, 1)",
                         ],
                         borderWidth: 1,
                     },
                     {
-                        label: 'lader',
+                        label: 'Lader',
                         data: data[1],
                         backgroundColor: [
                             "rgba(255, 99, 132, 0.2)",
-                            // "rgba(54, 162, 235, 0.2)",
                         ],
                         borderColor: [
                             "rgba(255, 99, 132, 1)",
-                            // "rgba(54, 162, 235, 1)",
                         ],
                         borderWidth: 1,
                     }
@@ -74,12 +69,8 @@
                                     label = ' ';
                                 }
                                 if (context.parsed.y !== null) {
-                                    // label += new Intl.NumberFormat('da-DK', { style: 'currency', currency: 'DKK' }).format(context.parsed.y);
-                                    // label = date.toLocaleDateString('da-DK', {month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'});
-                                    // label = 'test';
                                     label += new Intl.NumberFormat('da-DK', { style: 'currency', currency: 'DKK' }).format(context.parsed.y);
                                     context.parsed.x + 1 < 10 ? y_value = '0' + (context.parsed.x + 1) : y_value = '' + (context.parsed.x + 1);
-                                    // console.log('y_value from Chart: ' + y_value);
                                     detail_link = y_value;
                                 }
                                 return label;
@@ -100,25 +91,15 @@
         myChart = new Chart(ctx, setup(d)); //init the chart
         return {
             update(u){
-                myChart.data.datasets[0].data = u;	
+                myChart.data.datasets[0].data = u[0];	
+                myChart.data.datasets[1].data = u[1];
                 myChart.data.datasets[0].label = label;
+                myChart.data.datasets[1].label = 'Lader';
                 myChart.update();
             },
             destroy(){ myChart.destroy();	}				
         }
     }
-    
-    // $: detail_link = 'day' ? $_view.day = y_value.toString() : $_view.day = '01' ;
-    // $: detail_link = 'month' ? $_view.day = y_value.toString() : $_view.month = '06' ;
-    // $: detail_link = 'year' ? $_view.month = y_value.toString() : $_view.month = '06' ;
-
-    // $: console.log('Chart detail_link: ' + detail_link)
-
-    // detail_link = 'no'
-
-    // $: if ( mode === 'year' ) $_view.month = y_value.toString();
-    // $: if ( mode === 'month' ) $_view.day = y_value.toString();
-    // $: if ( mode === 'day' ) $_view.day = y_value.toString();
     
 </script>
 

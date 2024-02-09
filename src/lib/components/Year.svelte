@@ -3,64 +3,43 @@
 
 	/** @type {import('./$types').PageData} */
 
-	import Chart from "$lib/components/Chart.svelte";
+	import YearChart from "$lib/components/YearChart.svelte";
 	import { getChartYearData, getLatestDataDate, totalYear } from '$lib/chartData.js';
 	import {_view, _active, _treshold} from '$lib/stores.js';
 	import Button, { Label } from '@smui/button';
 	import LayoutGrid, { Cell } from '@smui/layout-grid';
+	import { convertMonthDate, subtractRefusion } from "$lib/utils";
 
     export let data, detail_link;
-
-	let view = $_view;
-	let year = view.year;
-	let month = view.month;
-	let day = view.day;
 	
 	let labels, chartdata;
 	let mode = 'year';
 	let title = 'Strømforbrug månedligt'
-    let title_date = year;
+    let title_date = $_view.year;
 
-	// Set to latest month in latest year
-	// detail_link = getLatestDataDate(data.years[`${year}`]).latestMonth;
 	detail_link = undefined;
-
 
     let yearChart = (y) => {
 		let d = getChartYearData(data.years, `${y}`);
-		chartdata = d[0];
+		let r = convertMonthDate(data.refusion_data[`${y}`]) 
+		// The map() method of Array instances creates a new array populated with the results of calling a provided function on every element in the calling array.
+		// Below is an operator on strings, and since the subtraction operator is used, the string numbers are converted into numbers
+		chartdata = [d[0][0], d[0][1].map((v, i) => v - r[i]), r];
 		labels = d[1];
 		title_date = y;
 	}
-	
 
 	let setMonth = (m) => {
 		if ( m  === undefined ) m = getLatestDataDate(data.years).latestMonth;
 		$_view.month = m;
-		$_view.day = getLatestDataDate(data.years).latestDay;
 	}
 
 	let setYear = (y) => {
-		year = y;
-
-		// console.log(year)
-		// console.log(month)
-	}
-
-	let isDisabled = (y) => {
-		return y !== year;
-	}
-
-	let getVariant = () => {
-		return "outlined";
+		$_view.year = y;
 	}
 	
-	$: yearChart(year);
+	$: yearChart($_view.year);
 	$: setMonth(detail_link);
-
-	// console.log(totalYear(data.years, 2023))
-
-	// console.log(Object.keys(data.years).length)
 
 </script>
 
@@ -86,7 +65,7 @@
 <LayoutGrid>
 	<Cell span={12}>
 		<div class='graph' on:click={() => ($_active='month')} on:keydown={() => ($_active='month')}>
-			<Chart {chartdata} {labels} label={title_date} {title} bind:detail_link/>
+			<YearChart {chartdata} {labels} label={title_date} {title} bind:detail_link/>
 		</div>
 	</Cell>
 </LayoutGrid>
@@ -96,7 +75,7 @@
 		<Cell span={8}>
 			<div class="center">
 				{#each Object.keys(data.years) as y}
-					<Button variant="{year === y ? 'raised' : 'outlined'}" color="secondary" class="nav" href={null} on:click={() => setYear(y)} on:keydown={() => setYear(y)}><Label>{y}</Label></Button>
+					<Button variant="{$_view.year === y ? 'raised' : 'outlined'}" color="secondary" class="nav" href={null} on:click={() => setYear(y)} on:keydown={() => setYear(y)}><Label>{y}</Label></Button>
 				{/each}
 			</div>
 		</Cell>
