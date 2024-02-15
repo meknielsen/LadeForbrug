@@ -159,10 +159,9 @@ export function totalYear(data_obj, year, treshold) {
     total += parseFloat(totalMonth(data_obj, year, [numberString(i+1)], treshold)[0]);
     charging_total += parseFloat(totalMonth(data_obj, year, [numberString(i+1)], treshold)[1]);
   }
+  console.log(typeof total)
 
-  console.log(_active);
-
-  return [total.toFixed(2), charging_total.toFixed(2)];
+  return [total, charging_total];
 
 }
 

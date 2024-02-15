@@ -47,25 +47,10 @@ const MONTHS_EN = [
     return values;
   }
 
-  export function numberString(number) {
-    return (number<10) ? '0' + number : '' + number;
-  }
+  export let numberString = (number) => number < 10 ? '0' + number : '' + number;
 
-  export function convertMonthDate(data) {
-    let r = [];
-    for (var i = 0; i < 12; i++) {
-      r[i] = parseFloat(data[i].replace(/,/g, '.')).toFixed(2);
-    }
-    return r;
-  }
+  export let convertMonthDate = (data) => data.map((value) => parseFloat(value.replace(/,/g, '.')).toFixed(2));
+  
+  export let subtractRefusion = (c, r) => c.map((currentValue, index) => currentValue - r[index]);
 
-  export function subtractRefusion(c, r) {
-    let n = [];
-    for (var i = 0; i < 12; i++) {
-      n[i] = c[i]-r[i]
-    }
-
-    console.log(c.map(function(v, i) {return v - r[i]}))
-
-    return  c.map(function(v, i) {return v - r[i]});
-  }
+  

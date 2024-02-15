@@ -8,7 +8,7 @@
 	import {_view, _active, _treshold} from '$lib/stores.js';
 	import Button, { Label } from '@smui/button';
 	import LayoutGrid, { Cell } from '@smui/layout-grid';
-	import { convertMonthDate, subtractRefusion } from "$lib/utils";
+	import { convertMonthDate } from "$lib/utils";
 
     export let data, detail_link;
 	

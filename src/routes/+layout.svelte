@@ -1,4 +1,5 @@
 <script>
+  import "../app.pcss";
   // @ts-nocheck
   import TopAppBar, { Row, Section, Title } from '@smui/top-app-bar';
   import IconButton from '@smui/icon-button';
@@ -28,13 +29,13 @@
 
 <svelte:head>
   {#if darkTheme === undefined}
-    <link rel="stylesheet" href="/smui-light.css" media="(prefers-color-scheme: light)"/>
-    <link rel="stylesheet" href="/smui-dark.css" media="screen and (prefers-color-scheme: dark)"/>
+    <link rel="stylesheet" href="/smui-light.css" media="(prefers-color-scheme: light)">
+    <link rel="stylesheet" href="/smui-dark.css" media="screen and (prefers-color-scheme: dark)">
   {:else if darkTheme}
-    <link rel="stylesheet" href="/smui-light.css" media="print" />
-    <link rel="stylesheet" href="/smui-dark.css" media="screen" />
+    <link rel="stylesheet" href="/smui-light.css" media="print">
+    <link rel="stylesheet" href="/smui-dark.css" media="screen">
   {:else}
-    <link rel="stylesheet" href="/smui-light.css" />
+    <link rel="stylesheet" href="/smui-light.css">
   {/if}
 </svelte:head>
 
@@ -46,48 +47,48 @@
 
 <div class="flexy">
     <div class="top-app-bar-container flexor">
-      <TopAppBar
-        variant="static"
-        color='secondary'
-      >
+      <TopAppBar variant="static" color="secondary">
         <Row>
           <Section>
             <Title>Ladeforbrug</Title>
             <div class="spacer"></div>
             <Wrapper>
-              <IconButton class="material-symbols-outlined" on:click={() => activeView('year')}>calendar_month</IconButton>
+              <IconButton class="material-symbols-outlined" on:click="{()" => activeView('year')}&gt;calendar_month</IconButton>
               <Tooltip>Year</Tooltip>
             </Wrapper>
             <Wrapper>
-              <IconButton class="material-symbols-outlined" on:click={() => activeView('month')}>date_range</IconButton>
+              <IconButton class="material-symbols-outlined" on:click="{()" => activeView('month')}&gt;date_range</IconButton>
               <Tooltip>Month</Tooltip>
             </Wrapper>
             <Wrapper>
-              <IconButton class="material-symbols-outlined" on:click={() => activeView('day')}>today</IconButton>
+              <IconButton class="material-symbols-outlined" on:click="{()" => activeView('day')}&gt;today</IconButton>
               <Tooltip>Day</Tooltip>
             </Wrapper>
           </Section>
           <Section align="end" toolbar>
             <div style="min-width: 50px;">
-              <IconButton class="material-symbols-outlined" on:click={() => settings.setOpen(true)}>settings</IconButton>
+              <IconButton class="material-symbols-outlined" on:click="{()" => settings.setOpen(true)}&gt;settings</IconButton>
               <!-- <IconButton class="material-symbols-outlined" on:click={() => activeView('settings')}>settings</IconButton> -->
-              <Menu bind:this={settings}>
+              <Menu bind:this="{settings}">
                 <List>
-                  <Item on:SMUI:action={() => activeView('settings')}>
+                  <Item on:smui:action="{()" => activeView('settings')}&gt;
                     <Text>Settings</Text>
                   </Item>
-                  <Item on:SMUI:action={() => activeView('summary')}>
+                  <Item on:smui:action="{()" => activeView('summary')}&gt;
                     <Text>Summary</Text>
                   </Item>
-                  <Separator />
+                  <Item on:smui:action="{()" => activeView('load')}&gt;
+                    <Text>Load Data</Text>
+                  </Item>
+                  <Separator></Separator>
                   <SelectionGroup>
-                    <Item on:SMUI:action={() => (selected1 = 'light')} selected={selected1 === 'light'} on:click={toggleMode}>
+                    <Item on:smui:action="{()" => (selected1 = 'light')} selected={selected1 === 'light'} on:click={toggleMode}&gt;
                       <Text>Light</Text>
                       <SelectionGroupIcon>
                         <i class="material-symbols-outlined">check</i>
                       </SelectionGroupIcon>
                     </Item>
-                    <Item on:SMUI:action={() => (selected1 = 'dark')} selected={selected1 === 'dark'} on:click={toggleMode}>
+                    <Item on:smui:action="{()" => (selected1 = 'dark')} selected={selected1 === 'dark'} on:click={toggleMode}&gt;
                       <Text>Dark</Text>
                       <SelectionGroupIcon>
                         <i class="material-symbols-outlined">check</i>
@@ -101,7 +102,7 @@
         </Row>
       </TopAppBar>
       <div class="flexor-content">
-        <slot />
+        <slot></slot>
       </div>
     </div>
 </div>
