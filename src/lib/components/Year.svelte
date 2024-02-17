@@ -6,9 +6,10 @@
 	import YearChart from "$lib/components/YearChart.svelte";
 	import { getChartYearData, getLatestDataDate, totalYear } from '$lib/chartData.js';
 	import {_view, _active, _treshold} from '$lib/stores.js';
-	import Button, { Label } from '@smui/button';
-	import LayoutGrid, { Cell } from '@smui/layout-grid';
 	import { convertMonthDate } from "$lib/utils";
+
+	import { Button } from 'flowbite-svelte';
+	import { DarkMode } from 'flowbite-svelte';
 
     export let data, detail_link;
 	
@@ -48,6 +49,7 @@
 		width: 80%;
 		margin: 0 auto;
 		padding-top: 5%;
+		padding-bottom: 5%;
 	}
 	.center {
 		margin: auto;
@@ -55,32 +57,17 @@
 		padding: 1px;
 		text-align: center;
 	}
-	:global(.nav) {
-		min-width: 32px;
-		padding: 2px;
-		margin: 2px;
-	}
 </style>
 
-<LayoutGrid>
-	<Cell span={12}>
-		<div class='graph' on:click={() => ($_active='month')} on:keydown={() => ($_active='month')}>
-			<YearChart {chartdata} {labels} label={title_date} {title} bind:detail_link/>
-		</div>
-	</Cell>
-</LayoutGrid>
+<div class='graph' on:click={() => ($_active='month')} on:keydown={() => ($_active='month')} role="link" tabindex="0">
+	<YearChart {chartdata} {labels} label={title_date} {title} bind:detail_link/>
+</div>
 
-<LayoutGrid align="center">
-	<Cell span={2}></Cell>
-		<Cell span={8}>
-			<div class="center">
-				{#each Object.keys(data.years) as y}
-					<Button variant="{$_view.year === y ? 'raised' : 'outlined'}" color="secondary" class="nav" href={null} on:click={() => setYear(y)} on:keydown={() => setYear(y)}><Label>{y}</Label></Button>
-				{/each}
-			</div>
-		</Cell>
-	<Cell span={2}></Cell>
-</LayoutGrid>
+<div class="center">
+	{#each Object.keys(data.years) as y}
+		<Button color="{$_view.year === y ? 'dark' : 'light'}" class="border p-2 m-1" href={null} on:click={() => setYear(y)} on:keydown={() => setYear(y)}>{y}</Button>
+	{/each}
+</div>
 
 
 

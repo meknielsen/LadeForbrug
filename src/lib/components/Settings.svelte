@@ -1,28 +1,37 @@
 <script>
 // @ts-nocheck
 
-    import LayoutGrid, { Cell } from '@smui/layout-grid';
-    import Button, { Label } from '@smui/button';
-    import Textfield from '@smui/textfield';
-    import HelperText from '@smui/textfield/helper-text';
-    import { months, numberString } from '$lib/utils.js';
-    import Select, { Option } from '@smui/select';
-    import IconButton from '@smui/icon-button';
-    import { _active } from '$lib/stores.js';
-    import Tooltip, { Wrapper, RichActions } from '@smui/tooltip';
-    import Dialog, { Title, Content, Actions } from '@smui/dialog';
+    // import { Input } from 'flowbite-svelte';
+    import { FloatingLabelInput, Helper, Label, Input, CloseButton } from 'flowbite-svelte';
+    import { ButtonGroup, Button, Dropdown, DropdownItem, Select, Modal, P } from 'flowbite-svelte';
+    import { DarkMode } from 'flowbite-svelte';
 
-    import Icon from '@smui/textfield/icon';
-    import { json } from '@sveltejs/kit';
-    import { get_current_component } from 'svelte/internal';
+    import { ExclamationCircleOutline, PlusOutline, ArrowRightOutline  } from 'flowbite-svelte-icons';
+
+    import { months, numberString } from '$lib/utils.js';
+
+    import { _active } from '$lib/stores.js';
+
+    // import Tooltip, { Wrapper, RichActions } from '@smui/tooltip';
+    // import Dialog, { Title, Content, Actions } from '@smui/dialog';
+
+    // import Icon from '@smui/textfield/icon';
+
+    // import { json } from '@sveltejs/kit';
+    // import { get_current_component } from 'svelte/internal';
 
     let refusion_data = [];
     let today = new Date();
     let year = today.getFullYear().toString();
+    let new_year = '';
     let value = year;
+    let years = [];
     let open = false;
     let locale = 'DK';    
     let _values = ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0']
+    let popupDelete = false;
+    let popupAdd = false;
+    let isDisabled = true;
 
     /**
      * Set the refusion data for the given year and month.
@@ -40,31 +49,35 @@
     }
 
     let add_year = async (year) => {
+        get_refusion_data(year);
         await fetch(`api/settings/${year}/`, {
             method: 'PUT',
             headers: {
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify({})
+            body: JSON.stringify([])
         });
         get_refusion_data(year);
     }
 
-    let delete_year = async (year) => {
-        await fetch(`api/settings/${year}/`, {
+    let delete_year = async (y) => {
+        await fetch(`api/settings/${y}/`, {
             method: 'DELETE',
             headers: {
                 'Content-type': 'application/json'
             },
         });
         value = today.getFullYear().toString();
-        get_refusion_data(year);
+        get_refusion_data(y);
+        year = value;
+        years = years.filter(e => e.value !== `${y}`);
     }
 
     let get_refusion_data = async (year) => {
         const response = await fetch(`api/settings/`).then((r) => r.json());
         refusion_data = response;
         for (let i = 0; i < Object.keys(refusion_data).length; i++ ) {
+            years[i] = { value: Object.keys(refusion_data)[i], name: Object.keys(refusion_data)[i]}
             if ( Object.keys(refusion_data)[i] === year ) {
                 for ( let j = 0; j < 12; j++ ){
                     if ( refusion_data[year][j] !== undefined ) {
@@ -75,12 +88,17 @@
                 }
             }
         }
+        console.log(years)
     }
 
     let update_refusion_data = (data) => {
         let values = [];
         for ( let i= 0; i < 12; i++ ) {
-            values[i] = data[i];
+            if ( data[i] == "" ) {
+                values[i] = "0,00";
+            } else {
+                values[i] = data[i];
+            }
         }
         refusion_data[year] = values
     }
@@ -89,150 +107,157 @@
         $_active = s;
     }
 
+    let validate_input = (y) => {
+        year = y;
+        isDisabled = !isNaN(y) && y.length === 4 && Number(y) >= 2020 && !Object.keys(refusion_data).includes(y);
+        return isDisabled;
+    }
+
     $: get_refusion_data(year);
     $: update_refusion_data(_values)
-    $: year = value;
+    $: year = value; 
 
 </script>
 
 <style>
-    * :global(.cell) {
-		min-width: 90px;
-		padding: 2px;
-		margin: 2px;
-	}
-    :global(Button) {
-        width: 100px;
-        margin: 2px;
-        margin-right: 4px;
-    }
-    .settings {
-        display: flex;
-        justify-content: left;
-        align-items: center;
-        min-width: 200px;
-    }
-    .settings-right {
-        display: flex;
-        justify-content: left;
-        align-items: center;
-    }
-    .cell-button {
-        width: 250px;
-        margin-left: 6px;
-        display: flex;
-        justify-content: left;
-        align-items:center
-    }
-    .textfield {
-        width: 125px;
-        margin-left: 6px;
-        margin-right: 6px;
-    }
-    .wrapper {
-        width: 500px;
-        display: flex;
-        justify-content: left;
-        align-items:center;
-    }
-    .add-button {
-        margin-left: 6px;
-        margin-bottom: 10px;
-        margin-top: 10px;
-        display: flex;
-        justify-content: left;
-        align-items:center
-    }
 </style>
 
-<LayoutGrid>
-    <Cell span={3}>
-        <div class="settings">
-            <Select variant="outlined" color="secondary" bind:value>
-              {#each Object.keys(refusion_data) as year}
-                <Option value={year}>{year}</Option>
-              {/each}
-            </Select>
-            <Wrapper rich>
-                <div class="wrapper">
-                <IconButton class="material-symbols-outlined">add_circle</IconButton>
-                <Tooltip persistent>
-                    <Title>
-                        Add year 
-                    </Title>
-                    <Content>
-                        <div class="textfield">
-                            <Textfield variant="outlined" bind:value={year}></Textfield>
-                        </div>
-                    </Content>
-                    <RichActions>
-                        <div class="add-button">
-                            <Button variant="raised" color="secondary" on:click={() => add_year(year)}><Label>Add</Label></Button>
-                        </div>
-                    </RichActions>
-                </Tooltip>
+<div class="flex flex-row pt-16">
+    <div class="basis-1/12"></div>
+    <div class="basis-1/12 min-w-32">
+        <Label for="search" class="block mt-1 w-28">Select year
+            <Select class="mt-2" size="sm" items={years} bind:value={year} placeholder=''/>
+        </Label>
+    </div>
+    <div class="basis-1/12 mt-8 min-w-16">
+        <Button pill={true} class="!p-2" color="alternative" on:click={() => (popupAdd = true, new_year ="")}><PlusOutline /></Button>
+        <Modal title="Add Year" bind:open={popupAdd} size="xs" autoclose outsideclose={false}>
+            <form class="flex flex-col space-y-1" action="#">
+            <Input type="text" name="add_year" bind:value={new_year} placeholder="" />
+            <P size="xs" class="text-red-500 {validate_input(new_year) ? 'dark:text-green-600' : 'dark:text-red-600'} ml-1 p-0" >Must be a valid, non-existing year after 2020.</P>
+        </form>
+            <svelte:fragment slot="footer">
+              <Button on:click={() => add_year(new_year)} disabled={!isDisabled}>Add</Button>
+              <Button color="alternative">Cancel</Button>
+            </svelte:fragment>
+        </Modal>
+    </div>
+    <div class="basis-6/12 flex">
+        {#each months({locale}) as month, index (index)}
+            {#if index<6}
+                <div class="min-w-28 p-1">
+                    <Label class="mb-2 ml-2" for="input-sm">{month}</Label>
+                    <ButtonGroup class="w-full" size="md">
+                        <Input id="input-sm" type="email" placeholder="0,00" bind:value={_values[index]}/>
+                    </ButtonGroup>
                 </div>
-            </Wrapper>
+            {/if}
+        {/each}
+    </div>
+    <div class="basis-2/12">
+    </div>
+    <div class="basis-1/12">
+        <CloseButton color="dark" size="lg" on:click={() => activeView('year')}/>
+    </div>
+</div>
+
+<div class="flex flex-row">
+    <div class="basis-1/12"></div>
+    <div class="basis-1/12 min-w-32"></div>
+    <div class="basis-1/12 min-w-16"></div>
+    <div class="basis-6/12 flex">
+        {#each months({locale}) as month, index (index)}
+            {#if index>5}
+                <div class="p-1 min-w-28">
+                    <Label class="mb-2 ml-2" for="input-sm">{month}</Label>
+                    <ButtonGroup class="w-full" size="md">
+                        <Input id="input-sm" type="email" placeholder="0,00" bind:value={_values[index]}/>
+                    </ButtonGroup>
+                </div>
+            {/if}
+        {/each}
+    </div>
+    <div class="basis-3/12">
+    </div>
+</div>
+
+<div class="flex flex-row">
+    <div class="basis-3/12"></div>
+    <div class="basis-1/12 flex">
+        <div class="m-1 pt-10 mr-6 w-12">
+            <Button on:click={()=>set_refusion_data(year)}>Save</Button>
         </div>
-    </Cell>
-	<Cell span={6}>
+        <div class="m-1 pt-10 w-12">
+            <Button on:click={() => (popupDelete = true)}>Delete</Button>
+            <Modal bind:open={popupDelete} size="xs" autoclose outsideclose>
+                <div class="text-center">
+                    <ExclamationCircleOutline class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" />
+                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">This will delete the year {year} and all the monthly refusion data registered. </h3>
+                    <Button color="red" class="me-2" on:click={() => (delete_year(year))}>Delete</Button>
+                    <Button color="alternative">Cancel
+                    </Button>
+                </div>
+            </Modal>
+        </div>
+        
+    </div>
+    <div class="basis-8/12"></div>
+</div>
+
+<!-- 
 		<div class="settings">
             {#each months({locale}) as month, index (index)}
                 {#if index<6}
-                    <div class="cell">
-                        <Textfield variant="outlined" bind:value={_values[index]} label={month}></Textfield>
+                    <div class="cell"> -->
+                        <!-- <Textfield variant="outlined" bind:value={_values[index]} label={month}></Textfield> -->
+                        <!-- <Label class="mb-2 ml-2" for="input-sm">{month}</Label>
+                        <ButtonGroup class="w-full" size="md">
+                            <Input id="input-sm" type="email" placeholder="0,00" />
+                        </ButtonGroup>
                     </div>
                 {/if}
             {/each}
-        </div>
-	</Cell>
-    <Cell span={2}><div class="settings"></div></Cell>
-    <Cell span={1}>
-        <div class="settings-right">
+        </div> -->
+
+        <!-- <div class="settings-right">
             <Wrapper>
                 <IconButton class="material-symbols-outlined" on:click={() => activeView('year')}>close</IconButton>
             </Wrapper>
-        </div>
-    </Cell>
+        </div> -->
 
-    <Cell span={3}><div class="settings"></div></Cell>
-    <Cell span={6}>
-		<div class="settings">
+
+		<!-- <div class="settings">
             {#each months({locale: 'DK'}) as month, index (index)}
                 {#if index>5}
-                    <div class="cell">
-                        <Textfield variant="outlined" bind:value={_values[index]} label={month}>
+                    <div class="cell"> -->
+                        <!-- <Textfield variant="outlined" bind:value={_values[index]} label={month}>
                         <HelperText slot="helper">Helper Text</HelperText>
-                        </Textfield>
+                        </Textfield> -->
+                        <!-- <Label class="mb-2 ml-2" for="input-sm">{month}</Label>
+                        <ButtonGroup class="w-full" size="md">
+                            <Input id="input-sm" type="email" placeholder="0,00" />
+                        </ButtonGroup>
                     </div>
                 {/if}
             {/each}
-        </div>
-	</Cell>
-    <Cell span={3}><div class="settings"></div></Cell>
+        </div> -->
 
-    <Cell span={3}><div class="settings"></div></Cell>
-    <Cell span={2}>
-        <div class="cell-button">
+        <!-- <div class="cell-button">
             <Button variant="raised" color="secondary" on:click={()=>set_refusion_data(year)}>Save</Button>
-            <!-- <Button variant="raised" color="secondary" on:click={()=>get_refusion_data(year)}>Update</Button> -->
             <Dialog bind:open aria-labelledby="simple-title" aria-describedby="simple-content">
                 <Title id="simple-title">WARNING</Title>
                 <Content id="simple-content">Chosing the 'Delete' button below will delete the year {year} and all the monthly refusion data registered. </Content>
                 <Actions>
                     <Button on:click={() => (delete_year(year))}>
-                    <Label>Delete</Label>
+                    Delete
                     </Button>
                     <Button>
-                    <Label>Cancel</Label>
+                    Cancel
                     </Button>
                 </Actions>
             </Dialog>
             <Button variant="raised" color="secondary" on:click={() => (open = true)}>Delete</Button>
-        </div>
-    </Cell>
-    <Cell span={7}><div class="settings"></div></Cell>
-
-</LayoutGrid>
+        </div> -->
+ 
 
 

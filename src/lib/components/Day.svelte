@@ -6,10 +6,8 @@
 	import {_view, _active, _treshold} from '$lib/stores.js';
 	import Chart from "$lib/components/Chart.svelte";
 	import {getChartDayData} from '$lib/chartData.js';
-	import Icon from '@iconify/svelte';
-
-	import LayoutGrid , { Cell } from '@smui/layout-grid';
-	import Button, { Label } from '@smui/button';
+	import { ChevronDoubleLeftOutline, ChevronLeftOutline, ChevronDoubleRightOutline, ChevronRightOutline } from 'flowbite-svelte-icons';
+	import { Button } from 'flowbite-svelte';
 	
     export let data, detail_link;
 
@@ -87,85 +85,48 @@
 	}
 
 	$: dayChart(current)
-	// $: console.log(current)
-	// $: console.log('year:' + year + ', month:' + month + ', day:' + day)
-	// $: console.log($_view)
 
 </script>
 
 <style>
-	* :global(.nav) {
-		width: 32px;
-		padding: 2px;
-		margin: 2px;
-	}
-	:global(.cell-align-right) {
-		text-align: right;
-	}
 	.center {
 		margin: auto;
 		width: 80%;
 		padding: 1px;
 		text-align: center;
-	}
-	.pagination {
 		display: flex;
 		justify-content: center;
-		align-items: center;
-		width: 100%;
-  	}
-	.arrows {
-		padding: 2px;
 	}
 	.graph {
 		width: 80%;
 		margin: 0 auto;
 		padding-top: 5%;
+		padding-bottom: 5%;
 	}
 </style>
 
+<div class='graph' on:click={() => ($_active='month')} on:keydown={() => ($_active='month')} role="link" tabindex="0">
+	<Chart {chartdata} {labels} label={title_date} {title} bind:detail_link/>
+</div>
 
-<LayoutGrid>
-	<Cell span={12}>
-		<div class='graph' on:click={() => ($_active='month')} on:keydown={() => ($_active='month')}>
-			<Chart {chartdata} {labels} label={title_date} {title} bind:detail_link/>
-		</div>
-	</Cell>
-</LayoutGrid>
+<div class="center">
+	<div class='arrows'>
+	<Button color="light" class="w-2" href={null} on:click={() => previous_page()} on:keydown={() => previous_page()} disabled = {pp_disabled}><ChevronDoubleLeftOutline/></Button>
+	<Button color="light" class="w-2 mr-9" href={null} on:click={() => previous()} on:keydown={() => previous()} disabled = {p_disabled}><ChevronLeftOutline/></Button>
+	</div>
+	<div>
+		{#each Array(9) as _, index (index)}
+			{#if index + first <= last}
+				<Button color="{current === toLabel(index+first) ? 'dark' : 'light'}" class="border w-2" href={null} on:click={() => (current = toLabel(index+first))}>{toLabel(index+first) }</Button>
+			{/if}
+		{/each}
+	</div>
+	<div class='arrows'>
+		<Button color="light" class="w-2 ml-9" href={null} on:click={() => next()} on:keydown={() => next()} disabled = {n_disabled}><ChevronRightOutline/></Button>
+		<Button color="light"  class="w-2"href={null} on:click={() => next_page()} on:keydown={() => next_page()} disabled = {np_disabled}><ChevronDoubleRightOutline/></Button>
+	</div>
+</div>
 
-<LayoutGrid>
-	<Cell span={1}></Cell>
-	<Cell align="left" span={1}>
-		<div class="pagination">
-			<div class='arrows'>
-			<Button variant="outlined" color="secondary" class="nav" href={null} on:click={() => previous_page()} on:keydown={() => previous_page()} disabled = {pp_disabled}><Label><Icon icon="mdi:chevron-double-left" style="font-size: 16px"/></Label></Button>
-			</div>
-			<div class='arrows'>
-			<Button variant="outlined" color="secondary" class="nav" href={null} on:click={() => previous()} on:keydown={() => previous()} disabled = {p_disabled}><Label><Icon icon="mdi:chevron-left" style="font-size: 16px"/></Label></Button>
-			</div>
-		</div>
-	</Cell>
-	<Cell span={8}>
-			<div class="center">
-					{#each Array(9) as _, index (index)}
-					{#if index + first <= last}
-						<Button variant="{current === toLabel(index+first) ? 'raised' : 'outlined'}" color="secondary" class="nav" href={null} on:click={() => (current = toLabel(index+first))}><Label>{toLabel(index+first) }</Label></Button>
-					{/if}
-				{/each}
-			</div>
-	</Cell>
-	<Cell span={1}>
-		<div class="pagination">
-			<div class='arrows'>
-			<Button variant="outlined" color="secondary" class="nav" href={null} on:click={() => next()} on:keydown={() => next()} disabled = {n_disabled}><Label><Icon icon="mdi:chevron-right" style="font-size: 16px"/></Label></Button>
-			</div>
-			<div class='arrows'>
-			<Button variant="outlined" color="secondary"  class="nav"href={null} on:click={() => next_page()} on:keydown={() => next_page()} disabled = {np_disabled}><Label><Icon icon="mdi:chevron-double-right" style="font-size: 16px"/></Label></Button>
-			</div>
-		</div>
-	</Cell>
-	<Cell span={1}></Cell>
-</LayoutGrid>
 
 
 

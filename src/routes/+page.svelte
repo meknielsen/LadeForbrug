@@ -1,7 +1,5 @@
 <script>
 // @ts-nocheck
-
-    
     import Year from '$lib/components/Year.svelte'
     import Month from '$lib/components/Month.svelte'
     import Day from '$lib/components/Day.svelte'
@@ -9,6 +7,9 @@
     import Summary from '$lib/components/Summary.svelte'
     import UploadData from '$lib/components/UploadData.svelte'
     import {_data, _view, _active} from '$lib/stores.js';
+    import { DarkMode } from 'flowbite-svelte';
+    import { Alert } from 'flowbite-svelte';
+
     import { getChartYearData, getLatestDataDate } from '$lib/chartData.js';
 
     export let data;
