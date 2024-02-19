@@ -38,7 +38,7 @@
       <CogOutline class="w-5 h-5" />
       <Dropdown bind:open={dropdownOpen}>
         <DropdownItem on:click={() => activeView('settings')} on:click={() => (dropdownOpen = false)}>Settings</DropdownItem>
-        <DropdownItem bind:open={dropdownOpen} on:click={() => activeView('summary')}>Summary</DropdownItem>
+        <DropdownItem on:click={() => activeView('summary')} on:click={() => (dropdownOpen = false)}>Summary</DropdownItem>
         <DropdownItem bind:open={dropdownOpen} on:click={() => activeView('load')}>Load Data</DropdownItem>
         <!-- <DropdownDivider /> -->
       </Dropdown>

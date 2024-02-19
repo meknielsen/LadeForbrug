@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config}*/
+
+// const { addDynamicIconSelectors } = require('@iconify/tailwind');
+
 const config = {
   content: ["./src/**/*.{html,js,svelte,ts}", './node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}'],
 
