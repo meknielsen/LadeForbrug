@@ -13,7 +13,7 @@ let hour;
 let price;
 
 export function loadData() {
-  fs.createReadStream("elforbrug_2023_2024.csv")
+  fs.createReadStream("elforbrug_2024_01.csv")
   .pipe(parse({ relax_quotes: true, delimiter: ";", from_line: 2, ltrim: true, rtrim: true }))
   .on("data", function (r) {
     for (let i = 0; i < r.length; i++) {

@@ -117,7 +117,7 @@
 	<div>
 		{#each Array(9) as _, index (index)}
 			{#if index + first <= last}
-				<Button color="{current === toLabel(index+first) ? 'dark' : 'light'}" class="border w-2" href={null} on:click={() => (current = toLabel(index+first))}>{toLabel(index+first) }</Button>
+				<Button color="{current === toLabel(index+first) ? 'dark' : 'light'}" class="border w-2 mx-1" href={null} on:click={() => (current = toLabel(index+first))}>{toLabel(index+first) }</Button>
 			{/if}
 		{/each}
 	</div>

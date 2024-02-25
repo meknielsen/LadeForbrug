@@ -45,8 +45,8 @@
 		chartdata = d[0];
 		labels = d[1];
 		title_date = getTitleDate(`${m}`);
-		total_month = totalMonth(data.years, `${year}`, `${m}`)[0];
-		charging_month = totalMonth(data.years, `${year}`, `${m}`)[1];
+		// total_month = totalMonth(data.years, `${year}`, `${m}`)[0];
+		// charging_month = totalMonth(data.years, `${year}`, `${m}`)[1];
         if ( m >= 12 ) {n_disabled = true;} else {n_disabled = undefined;}
 		if ( m <= 1 ) {p_disabled = true;} else {p_disabled = undefined;}
 	}
@@ -88,7 +88,7 @@
 <div class="center">
 	{#each Array(12) as _, index (index)}
 		{#if index < 12}
-			<Button color="{current === toLabel(index+1) ? 'dark' : 'light'}"  class="border w-2" href={null} on:click={() => (current = toLabel(index+1))}>{toLabel(index+1)}</Button>
+			<Button color="{current === toLabel(index+1) ? 'dark' : 'light'}"  class="border w-2 mx-1" href={null} on:click={() => (current = toLabel(index+1))}>{toLabel(index+1)}</Button>
 		{/if}
 	{/each}
 </div>

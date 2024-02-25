@@ -15,7 +15,7 @@
   $_active = 'year';
   let activeView = (s) => {
     $_active = s;
-    console.log($_active)
+    // console.log($_active)
   }
 
 </script>

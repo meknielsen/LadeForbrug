@@ -2,8 +2,8 @@
 import { writable } from 'svelte/store';
 
 let today = new Date();
-// let year = '2023';
-let year = today.getFullYear();
+let year = '2023';
+// let year = today.getFullYear();
 let month = today.getMonth();
 let day = '01';
 

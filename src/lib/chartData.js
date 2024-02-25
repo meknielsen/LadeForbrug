@@ -9,7 +9,7 @@ export function getChartDayData(day_obj, treshold) {
   let hData = [];
   let total_data = [[]];
 
-  treshold = 2;
+  treshold = 10;
   
   for ( let i = 0; day_obj !== undefined && i < day_obj.length; i++ ) {
     if ( day_obj[i].price.replace(/,/g, '.') < treshold) {
@@ -46,8 +46,6 @@ export function getChartMonthData(data_obj, year, month, treshold) {
   let months_obj = ( data_obj[year][month] !== undefined) ? data_obj[year][month] : undefined;
   let daysInMonth = new Date(year, month, 0).getDate();
 
-  // console.log(months_obj)
-
   for ( let i = 0; i < daysInMonth; i++ ) {
     if ( months_obj !== undefined && Object.keys(months_obj)[i] !== undefined ) {
       hData[Number(Object.keys(months_obj)[i])-1] = totalDay(months_obj[Object.keys(months_obj)[i]], 2)[0];
@@ -81,8 +79,8 @@ export function getChartYearData(data_obj, year, treshold) {
   let total_data = [[]];
   
   for ( let i = 0; i < 12; i++ ) {
-    hData[i] = (Object.keys(years_obj).includes(numberString(i+1))) ? (totalMonth(data_obj, year, [numberString(i+1)], treshold)[0]): '';
-    cData[i] = (Object.keys(years_obj).includes(numberString(i+1))) ? (totalMonth(data_obj, year, [numberString(i+1)], treshold)[1]): '';
+    hData[i] = (years_obj !== undefined && Object.keys(years_obj).includes(numberString(i+1))) ? (totalMonth(data_obj, year, [numberString(i+1)], treshold)[0]): '';
+    cData[i] = (years_obj !== undefined && Object.keys(years_obj).includes(numberString(i+1))) ? (totalMonth(data_obj, year, [numberString(i+1)], treshold)[1]): '';
   }
 
   total_data = [hData, cData];
@@ -101,23 +99,15 @@ export function totalDay(day_obj, treshold) {
   let total, avg, sum_avg, days_avg, basis = 0;
   total = avg = sum_avg = days_avg = basis = 0;
 
-  treshold = 2;
-
-  for (let i = 0; i < day_obj.length; i++) {
-    if ( parseFloat(day_obj[i].price.replace(/,/g, '.')) < treshold ) {
-      sum_avg = sum_avg + parseFloat(day_obj[i].price.replace(/,/g, '.'));
-      days_avg++;
-    }
-    basis = parseFloat(day_obj[i].price.replace(/,/g, '.'));
-  }
-  avg = (sum_avg / days_avg);
+  treshold = 10;
   
   for (let i = 0; day_obj !== undefined && i < day_obj.length; i++) {
-    
-    if ( parseFloat(day_obj[i].price.replace(/,/g, '.')) < treshold ) {
-      total = total + parseFloat(day_obj[i].price.replace(/,/g, '.'));
-    } else {
-      charging_total += parseFloat(day_obj[i].price.replace(/,/g, '.'));
+    if ( day_obj[i] !== null ) {
+      if ( parseFloat(day_obj[i].price.replace(/,/g, '.')) < treshold ) {
+        total = total + parseFloat(day_obj[i].price.replace(/,/g, '.'));
+      } else {
+        charging_total += parseFloat(day_obj[i].price.replace(/,/g, '.'));
+      }
     }
   }
 
@@ -136,10 +126,8 @@ export function totalMonth(data_obj, year, month, treshold) {
   let total = 0;
  
   for ( let j = 0; total_obj !== undefined && j < total_obj.length; j++) {
-    // total += (Number(totalDay(total_obj[j])[0]) > 10) ? Number(totalDay(total_obj[j])[0]) : 10;
     total += Number(totalDay(total_obj[j], treshold)[0]);
     charging_total += Number(totalDay(total_obj[j], treshold)[1]);
-
   }
 
   return [total.toFixed(2), charging_total.toFixed(2)];
