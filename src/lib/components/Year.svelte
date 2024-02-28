@@ -31,7 +31,7 @@
 	}
 
 	let setMonth = (m) => {
-		if ( m  === undefined ) m = getLatestDataDate(data.years).latestMonth;
+		// if ( m  === undefined ) m = getLatestDataDate(data.years).latestMonth;
 		$_view.month = m;
 	}
 

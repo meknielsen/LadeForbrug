@@ -102,7 +102,7 @@ export function totalDay(day_obj, treshold) {
   treshold = 10;
   
   for (let i = 0; day_obj !== undefined && i < day_obj.length; i++) {
-    if ( day_obj[i] !== null ) {
+    if ( day_obj[i] !== null && day_obj[i] !== undefined) {
       if ( parseFloat(day_obj[i].price.replace(/,/g, '.')) < treshold ) {
         total = total + parseFloat(day_obj[i].price.replace(/,/g, '.'));
       } else {

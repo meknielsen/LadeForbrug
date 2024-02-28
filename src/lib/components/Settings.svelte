@@ -133,12 +133,12 @@
         <Button pill={true} class="!p-2" color="alternative" on:click={() => (popupAdd = true, new_year ="")}><PlusOutline /></Button>
         <Modal title="Add Year" bind:open={popupAdd} size="xs" autoclose outsideclose={false}>
             <form class="flex flex-col space-y-1" action="#">
-            <Input type="text" name="add_year" bind:value={new_year} placeholder="" />
-            <P size="xs" class="text-red-500 {validate_input(new_year) ? 'dark:text-green-600' : 'dark:text-red-600'} ml-1 p-0" >Must be a valid, non-existing year after 2020.</P>
-        </form>
+                <Input type="text" name="add_year" bind:value={new_year} placeholder="" />
+                <P size="xs" class="text-red-500 {validate_input(new_year) ? 'dark:text-green-600' : 'dark:text-red-600'} ml-1 p-0" >Must be a valid, non-existing year after 2020.</P>
+            </form>
             <svelte:fragment slot="footer">
-              <Button on:click={() => add_year(new_year)} disabled={!isDisabled}>Add</Button>
-              <Button color="alternative">Cancel</Button>
+                <Button on:click={() => add_year(new_year)} disabled={!isDisabled}>Add</Button>
+                <Button color="alternative">Cancel</Button>
             </svelte:fragment>
         </Modal>
     </div>

@@ -5,6 +5,7 @@
 	import { getChartMonthData, getChartYearData, getLatestDataDate, totalMonth } from '$lib/chartData.js';
 	import {_view, _active, _treshold} from '$lib/stores.js';
 	import { Button } from 'flowbite-svelte';
+	import { ChevronLeftOutline, ChevronRightOutline } from 'flowbite-svelte-icons';
 
     export let data, detail_link;
 
@@ -28,11 +29,11 @@
 	current = month;
 
 	let next = () => {
-		current = toLabel(Number(current)+1);
+		if (current < 12) current = toLabel(Number(current)+1);
 	}
 
 	let previous = () => {
-		current = toLabel(Number(current)-1);
+		if (current > 1) current = toLabel(Number(current)-1);
 	}
 
 	let getTitleDate = (m) => {
@@ -65,13 +66,7 @@
 
 </script>
 
-<style lang="scss">
-	.center {
-		margin: auto;
-		width: 100%;
-		padding: 1px;
-		text-align: center;
-	}
+<style>
 	.graph {
 		width: 80%;
 		margin: 0 auto;
@@ -85,12 +80,16 @@
 	<Chart {chartdata} {labels} label={title_date} {title} bind:detail_link/>
 </div>
 
-<div class="center">
+<div class="flex justify-center">
+	<Button  color="light" class="border w-2 mx-1" href={null} on:click={() => previous()}><ChevronLeftOutline/></Button>
+	<div class="min-w-10 flex"></div>
 	{#each Array(12) as _, index (index)}
 		{#if index < 12}
 			<Button color="{current === toLabel(index+1) ? 'dark' : 'light'}"  class="border w-2 mx-1" href={null} on:click={() => (current = toLabel(index+1))}>{toLabel(index+1)}</Button>
 		{/if}
 	{/each}
+	<div class="min-w-10 flex"></div>
+	<Button  color="light" class="border w-2 mx-1" href={null} on:click={() => next()}><ChevronRightOutline/></Button>
 </div>
 
 
