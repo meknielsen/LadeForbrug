@@ -2,14 +2,14 @@
 // @ts-nocheck
 
     // import { Input } from 'flowbite-svelte';
-    import { FloatingLabelInput, Helper, Label, Input, CloseButton } from 'flowbite-svelte';
-    import { ButtonGroup, Button, Dropdown, DropdownItem, Select, Modal, P } from 'flowbite-svelte';
-    import { DarkMode } from 'flowbite-svelte';
+    // import { FloatingLabelInput, Helper, Label, Input, Closebutton } from 'flowbite-svelte';
+    // import { buttonGroup, button, Dropdown, DropdownItem, Select, Modal, P } from 'flowbite-svelte';
+    // import { DarkMode } from 'flowbite-svelte';
 
-    import { ExclamationCircleOutline, PlusOutline, ArrowRightOutline  } from 'flowbite-svelte-icons';
+    // import { ExclamationCircleOutline, PlusOutline, ArrowRightOutline  } from 'flowbite-svelte-icons';
 
     import { months, numberString } from '$lib/utils.js';
-
+    import Icon from '@iconify/svelte';
     import { _active } from '$lib/stores.js';
 
     // import Tooltip, { Wrapper, RichActions } from '@smui/tooltip';
@@ -125,39 +125,50 @@
 <div class="flex flex-row pt-16">
     <div class="basis-1/12"></div>
     <div class="basis-1/12 min-w-32">
-        <Label for="search" class="block mt-1 w-28">Select year
-            <Select class="mt-2" size="sm" items={years} bind:value={year} placeholder=''/>
-        </Label>
+        <label for="search" class="block w-32">
+            <div class="label">
+                <span class="label-text">Select year</span>
+            </div>
+            <select class="select select-bordered w-full max-w-xs" bind:value={year}>
+                {#each years as year}
+                <option>{year.name}</option>
+                {/each}
+              </select>
+        </label>
     </div>
     <div class="basis-1/12 mt-8 min-w-16">
-        <Button pill={true} class="!p-2" color="alternative" on:click={() => (popupAdd = true, new_year ="")}><PlusOutline /></Button>
-        <Modal title="Add Year" bind:open={popupAdd} size="xs" autoclose outsideclose={false}>
+        <button class="btn-circle hover:base-100" on:click={() => (popupAdd = true, new_year ="")}><Icon icon="mdi:plus-circle-outline" class="w-6 h-6 me-2 mt-3" /></button>
+        <!-- <Modal title="Add Year" bind:open={popupAdd} size="xs" autoclose outsideclose={false}>
             <form class="flex flex-col space-y-1" action="#">
                 <Input type="text" name="add_year" bind:value={new_year} placeholder="" />
                 <P size="xs" class="text-red-500 {validate_input(new_year) ? 'dark:text-green-600' : 'dark:text-red-600'} ml-1 p-0" >Must be a valid, non-existing year after 2020.</P>
             </form>
             <svelte:fragment slot="footer">
-                <Button on:click={() => add_year(new_year)} disabled={!isDisabled}>Add</Button>
-                <Button color="alternative">Cancel</Button>
+                <button on:click={() => add_year(new_year)} disabled={!isDisabled}>Add</button>
+                <button color="alternative">Cancel</button>
             </svelte:fragment>
-        </Modal>
+        </Modal> -->
     </div>
     <div class="basis-6/12 flex">
         {#each months({locale}) as month, index (index)}
             {#if index<6}
-                <div class="min-w-28 p-1">
-                    <Label class="mb-2 ml-2" for="input-sm">{month}</Label>
-                    <ButtonGroup class="w-full" size="md">
-                        <Input id="input-sm" type="email" placeholder="0,00" bind:value={_values[index]}/>
-                    </ButtonGroup>
-                </div>
+            <div class="p-1 min-w-28">
+                <label class="form-control w-full max-w-xs mb-2" for="input-sm">
+                    <div class="label">
+                        <span class="label-text">{month}</span>
+                    </div>
+                    <input class="input input-bordered w-full max-w-xs" id="input-sm" type="text" placeholder="0,00" bind:value={_values[index]}/>
+                </label>
+            </div>
             {/if}
         {/each}
     </div>
     <div class="basis-2/12">
     </div>
     <div class="basis-1/12">
-        <CloseButton color="dark" size="lg" on:click={() => activeView('year')}/>
+        <button class="btn-circle hover:base-100" on:click={() => activeView('year')}>
+            <Icon icon="mdi:close-circle-outline" class="w-8 h-8" />
+        </button>
     </div>
 </div>
 
@@ -169,10 +180,12 @@
         {#each months({locale}) as month, index (index)}
             {#if index>5}
                 <div class="p-1 min-w-28">
-                    <Label class="mb-2 ml-2" for="input-sm">{month}</Label>
-                    <ButtonGroup class="w-full" size="md">
-                        <Input id="input-sm" type="email" placeholder="0,00" bind:value={_values[index]}/>
-                    </ButtonGroup>
+                    <label class="form-control w-full max-w-xs mb-2" for="input-sm">
+                        <div class="label">
+                            <span class="label-text">{month}</span>
+                        </div>
+                        <input class="input input-bordered w-full max-w-xs" id="input-sm" type="text" placeholder="0,00" bind:value={_values[index]}/>
+                    </label>
                 </div>
             {/if}
         {/each}
@@ -185,24 +198,24 @@
     <div class="basis-3/12"></div>
     <div class="basis-1/12 flex">
         <div class="m-1 pt-10 mr-6 w-12">
-            <Button on:click={()=>set_refusion_data(year)}>Save</Button>
+            <button class="btn btn-primary" on:click={()=>set_refusion_data(year)}>Save</button>
         </div>
         <div class="m-1 pt-10 w-12">
-            <Button on:click={() => (popupDelete = true)}>Delete</Button>
-            <Modal bind:open={popupDelete} size="xs" autoclose outsideclose>
+            <button class="btn btn-secondary" on:click={() => (popupDelete = true)}>Delete</button>
+            <!-- <Modal bind:open={popupDelete} size="xs" autoclose outsideclose>
                 <div class="text-center">
                     <ExclamationCircleOutline class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" />
                     <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">This will delete the year {year} and all the monthly refusion data registered. </h3>
-                    <Button color="red" class="me-2" on:click={() => (delete_year(year))}>Delete</Button>
-                    <Button color="alternative">Cancel
-                    </Button>
+                    <button class="btn btn-primary me-2"on:click={() => (delete_year(year))}>Delete</button>
+                    <button class="btn btn-primary">Cancel
+                    </button>
                 </div>
-            </Modal>
+            </Modal> -->
         </div>
-        
     </div>
     <div class="basis-8/12"></div>
 </div>
+
 
 <!-- 
 		<div class="settings">
@@ -211,9 +224,9 @@
                     <div class="cell"> -->
                         <!-- <Textfield variant="outlined" bind:value={_values[index]} label={month}></Textfield> -->
                         <!-- <Label class="mb-2 ml-2" for="input-sm">{month}</Label>
-                        <ButtonGroup class="w-full" size="md">
+                        <buttonGroup class="w-full" size="md">
                             <Input id="input-sm" type="email" placeholder="0,00" />
-                        </ButtonGroup>
+                        </buttonGroup>
                     </div>
                 {/if}
             {/each}
@@ -221,7 +234,7 @@
 
         <!-- <div class="settings-right">
             <Wrapper>
-                <IconButton class="material-symbols-outlined" on:click={() => activeView('year')}>close</IconButton>
+                <Iconbutton class="material-symbols-outlined" on:click={() => activeView('year')}>close</Iconbutton>
             </Wrapper>
         </div> -->
 
@@ -234,29 +247,29 @@
                         <HelperText slot="helper">Helper Text</HelperText>
                         </Textfield> -->
                         <!-- <Label class="mb-2 ml-2" for="input-sm">{month}</Label>
-                        <ButtonGroup class="w-full" size="md">
+                        <buttonGroup class="w-full" size="md">
                             <Input id="input-sm" type="email" placeholder="0,00" />
-                        </ButtonGroup>
+                        </buttonGroup>
                     </div>
                 {/if}
             {/each}
         </div> -->
 
         <!-- <div class="cell-button">
-            <Button variant="raised" color="secondary" on:click={()=>set_refusion_data(year)}>Save</Button>
+            <button variant="raised" color="secondary" on:click={()=>set_refusion_data(year)}>Save</button>
             <Dialog bind:open aria-labelledby="simple-title" aria-describedby="simple-content">
                 <Title id="simple-title">WARNING</Title>
                 <Content id="simple-content">Chosing the 'Delete' button below will delete the year {year} and all the monthly refusion data registered. </Content>
                 <Actions>
-                    <Button on:click={() => (delete_year(year))}>
+                    <button on:click={() => (delete_year(year))}>
                     Delete
-                    </Button>
-                    <Button>
+                    </button>
+                    <button>
                     Cancel
-                    </Button>
+                    </button>
                 </Actions>
             </Dialog>
-            <Button variant="raised" color="secondary" on:click={() => (open = true)}>Delete</Button>
+            <button variant="raised" color="secondary" on:click={() => (open = true)}>Delete</button>
         </div> -->
  
 

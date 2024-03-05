@@ -2,7 +2,6 @@
 // @ts-nocheck
 
     import { getChartYearData, getLatestDataDate, totalYear } from '$lib/chartData.js';
-    import { Button, Card } from 'flowbite-svelte';
     import Icon from '@iconify/svelte';
     import { _active, _view } from '$lib/stores.js';
   
@@ -35,12 +34,14 @@
             {#each years as year, _i}
                 <div>
                     <div class="basis-3/12 p-2">
-                        <Card class="min-w-60">
-                            <Button class="min-w-32 m-2" size="xl" color="none" on:click={() => activeView(year)} on:keydown={() => activeView(year)}><h5 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">{year}</h5></Button>
-                            <Button class="min-w-32 m-2" color="alternative"><Icon icon="mdi:home-lightning-bolt" style="color: rgba(54, 162, 235, 1)" class="w-6 h-6 me-2" />DKK {total(year)}</Button> 
-                            <Button class="min-w-32 m-2" color="alternative"><Icon icon="mdi:home-battery" style="color: rgba(255, 99, 132, 1)" class="w-6 h-6 me-2" />DKK {total_charging(year)}</Button>
-                            <Button class="min-w-32 m-2" color="alternative"><Icon icon="mdi:battery-charging-80" style="color: rgb(75, 192, 192)" class="w-6 h-6 me-2" />DKK {total_pay(year)}</Button>
-                        </Card>
+                        <div class="card w-60 bg-neutral text-neutral-content">
+                            <div class="card-body items-center text-center">
+                                <button class="btn btn-ghost min-w-40 m-2 hover:bg-neutral" size="xl" on:click={() => activeView(year)} on:keydown={() => activeView(year)}><h5 class="text-3xl font-bold tracking-tight">{year}</h5></button>
+                                <button class="btn min-w-48 m-2"><Icon icon="mdi:home-lightning-bolt" style="color: rgba(54, 162, 235, 1)" class="w-6 h-6 me-2" />DKK {total(year)}</button> 
+                                <button class="btn min-w-48 m-2"><Icon icon="mdi:home-battery" style="color: rgba(255, 99, 132, 1)" class="w-6 h-6 me-2" />DKK {total_charging(year)}</button>
+                                <button class="btn min-w-48 m-2"><Icon icon="mdi:battery-charging-80" style="color: rgb(75, 192, 192)" class="w-6 h-6 me-2" />DKK {total_pay(year)}</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             {/each}
