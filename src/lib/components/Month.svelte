@@ -4,8 +4,10 @@
 	import Chart from "$lib/components/Chart.svelte";
 	import { getChartMonthData, getChartYearData, getLatestDataDate, totalMonth } from '$lib/chartData.js';
 	import {_view, _active, _treshold} from '$lib/stores.js';
-	import { Button } from 'flowbite-svelte';
-	import { ChevronLeftOutline, ChevronRightOutline } from 'flowbite-svelte-icons';
+	import Icon from '@iconify/svelte';
+
+	// import { Button } from 'flowbite-svelte';
+	// import { ChevronLeftOutline, ChevronRightOutline } from 'flowbite-svelte-icons';
 
     export let data, detail_link;
 
@@ -71,7 +73,7 @@
 		width: 80%;
 		margin: 0 auto;
 		padding-top: 5%;
-		padding-bottom: 5%;
+		padding-bottom: 2%;
 	}
 </style>
 
@@ -81,15 +83,17 @@
 </div>
 
 <div class="flex justify-center">
-	<Button  color="light" class="border w-2 mx-1" href={null} on:click={() => previous()}><ChevronLeftOutline/></Button>
+	<!-- <button class="btn w-2 mx-1" href={null} on:click={() => previous()}><Icon icon="mdi:home-lightning-bolt" style="color: rgba(54, 162, 235, 1)" class="w-6 h-6 me-2" /></button> -->
 	<div class="min-w-10 flex"></div>
+	<div class="join">
 	{#each Array(12) as _, index (index)}
-		{#if index < 12}
-			<Button color="{current === toLabel(index+1) ? 'dark' : 'light'}"  class="border w-2 mx-1" href={null} on:click={() => (current = toLabel(index+1))}>{toLabel(index+1)}</Button>
-		{/if}
-	{/each}
+			{#if index < 12}
+				<button class="join-item btn btn-md {current === toLabel(index+1) ? 'btn-active' : ''}" on:click={() => (current = toLabel(index+1))}>{toLabel(index+1)}</button>
+			{/if}
+	{/each} 	 	 	
+</div>
 	<div class="min-w-10 flex"></div>
-	<Button  color="light" class="border w-2 mx-1" href={null} on:click={() => next()}><ChevronRightOutline/></Button>
+	<!-- <button class="btn btn-outline w-2 mx-1" href={null} on:click={() => next()}><Icon icon="mdi:settings-outline" class="w-4 h-4 me-2" /></button> -->
 </div>
 
 

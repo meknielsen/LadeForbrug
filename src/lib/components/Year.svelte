@@ -8,8 +8,8 @@
 	import {_view, _active, _treshold} from '$lib/stores.js';
 	import { convertMonthDate } from "$lib/utils";
 
-	import { Button } from 'flowbite-svelte';
-	import { DarkMode } from 'flowbite-svelte';
+	// import { Button } from 'flowbite-svelte';
+	// import { DarkMode } from 'flowbite-svelte';
 
     export let data, detail_link;
 	
@@ -49,7 +49,7 @@
 		width: 80%;
 		margin: 0 auto;
 		padding-top: 5%;
-		padding-bottom: 5%;
+		padding-bottom: 2%;
 	}
 	.center {
 		margin: auto;
@@ -64,9 +64,11 @@
 </div>
 
 <div class="center">
-	{#each Object.keys(data.years) as y}
-		<Button color="{$_view.year === y ? 'dark' : 'light'}" class="border p-2 m-1" href={null} on:click={() => setYear(y)} on:keydown={() => setYear(y)}>{y}</Button>
-	{/each}
+	<div class="join">
+		{#each Object.keys(data.years) as y}
+			<button class="join-item btn btn-md {$_view.year === y ? 'btn-active' : ''}" href={null} on:click={() => setYear(y)} on:keydown={() => setYear(y)}>{y}</button>
+		{/each}
+	</div>
 </div>
 
 

@@ -48,7 +48,6 @@ declare module '$env/static/private' {
 	export const WSL_DISTRO_NAME: string;
 	export const COLOR: string;
 	export const NVM_DIR: string;
-	export const npm_config_metrics_registry: string;
 	export const WAYLAND_DISPLAY: string;
 	export const LOGNAME: string;
 	export const NAME: string;
@@ -56,11 +55,11 @@ declare module '$env/static/private' {
 	export const PULSE_SERVER: string;
 	export const _: string;
 	export const npm_config_prefix: string;
+	export const npm_config_npm_version: string;
 	export const TERM: string;
 	export const npm_config_cache: string;
 	export const npm_config_node_gyp: string;
 	export const PATH: string;
-	export const WSL_PAC_URL: string;
 	export const NODE: string;
 	export const npm_package_name: string;
 	export const WT_SESSION: string;
@@ -139,7 +138,6 @@ declare module '$env/dynamic/private' {
 		WSL_DISTRO_NAME: string;
 		COLOR: string;
 		NVM_DIR: string;
-		npm_config_metrics_registry: string;
 		WAYLAND_DISPLAY: string;
 		LOGNAME: string;
 		NAME: string;
@@ -147,11 +145,11 @@ declare module '$env/dynamic/private' {
 		PULSE_SERVER: string;
 		_: string;
 		npm_config_prefix: string;
+		npm_config_npm_version: string;
 		TERM: string;
 		npm_config_cache: string;
 		npm_config_node_gyp: string;
 		PATH: string;
-		WSL_PAC_URL: string;
 		NODE: string;
 		npm_package_name: string;
 		WT_SESSION: string;

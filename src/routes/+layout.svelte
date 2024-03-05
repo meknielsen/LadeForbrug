@@ -30,9 +30,9 @@
       <a href="/" class="btn btn-ghost text-xl" on:click={() => activeView('summary')} on:keydown={() => activeView('summary')}>Ladeforbrug</a>
     </div>
     <div class="navbar-center">
-      <a class="btn btn-ghost" on:click={() => activeView('summary')}>Home</a>
-      <a class="btn btn-ghost" on:click={() => activeView('year')}>År</a>
-      <a class="btn btn-ghost" on:click={() => activeView('month')}>Måned</a>
+      <a class="btn btn-ghost" href={null} on:click={() => activeView('summary')} on:keydown={() => activeView('summary')}>Home</a>
+      <a class="btn btn-ghost"href={null} on:click={() => activeView('year')}>År</a>
+      <a class="btn btn-ghost" href={null} on:click={() => activeView('month')}>Måned</a>
       <!-- <a class="btn btn-ghost" on:click={() => activeView('day')}>Dag</a> -->
     </div>
     <div class="flex justify-end flex-1 px-2">
@@ -41,10 +41,11 @@
             <div tabindex="0" role="button" class="btn btn-ghost rounded-btn modal-button">
                 <Icon icon="mdi:settings-outline" class="w-4 h-4 me-2" />
             </div>
+            <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
             <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
-              <li ><a on:click={() => activeView('settings')} on:click= {() => document.activeElement.blur()} on:keydown= {() => document.activeElement.blur()}>Settings</a></li> 
-              <li ><a on:click={() => activeView('summary')} on:click= {() => document.activeElement.blur()} on:keydown= {() => document.activeElement.blur()}>Summary</a></li> 
-              <li ><a onclick="load_data.showModal()">Load Data</a></li>
+              <li ><a href={null} on:click={() => activeView('settings')} on:click= {() => document.activeElement.blur()} on:keydown= {() => document.activeElement.blur()}>Settings</a></li> 
+              <li ><a href={null} on:click={() => activeView('summary')} on:click= {() => document.activeElement.blur()} on:keydown= {() => document.activeElement.blur()}>Summary</a></li> 
+              <li ><a href={null} onclick="load_data.showModal()">Load Data</a></li>
               <dialog id="load_data" class="modal" >
                 <div class="modal-box">
                     <h3 class="font-bold text-lg">Upload file</h3>
@@ -58,6 +59,7 @@
                             </div>
                             <!-- <hr class="my-6 border-gray-600 sm:mx-auto lg:my-8" /> -->
                             <button class="btn btn-primary min-w-20 mr-2" for='file-upload' on:click={() => (loading = true)} disabled="{value === undefined ? false : false}" >Add</button>
+                            <!-- svelte-ignore missing-declaration -->
                             <button class="btn btn-accent min-w-20" on:click|preventDefault={() => load_data.close()}>Cancel</button>
                         </form>
                      </div>

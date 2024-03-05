@@ -48,16 +48,17 @@
         });
     }
 
-    let add_year = async (year) => {
-        get_refusion_data(year);
-        await fetch(`api/settings/${year}/`, {
+    let add_year = async (y) => {
+        get_refusion_data(y);
+        await fetch(`api/settings/${y}/`, {
             method: 'PUT',
             headers: {
                 'Content-type': 'application/json'
             },
             body: JSON.stringify([])
         });
-        get_refusion_data(year);
+        get_refusion_data(y);
+        year = y;
     }
 
     let delete_year = async (y) => {
@@ -108,7 +109,6 @@
     }
 
     let validate_input = (y) => {
-        year = y;
         isDisabled = !isNaN(y) && y.length === 4 && Number(y) >= 2020 && !Object.keys(refusion_data).includes(y);
         return isDisabled;
     }
@@ -137,17 +137,22 @@
         </label>
     </div>
     <div class="basis-1/12 mt-8 min-w-16">
-        <button class="btn-circle hover:base-100" on:click={() => (popupAdd = true, new_year ="")}><Icon icon="mdi:plus-circle-outline" class="w-6 h-6 me-2 mt-3" /></button>
-        <!-- <Modal title="Add Year" bind:open={popupAdd} size="xs" autoclose outsideclose={false}>
-            <form class="flex flex-col space-y-1" action="#">
-                <Input type="text" name="add_year" bind:value={new_year} placeholder="" />
-                <P size="xs" class="text-red-500 {validate_input(new_year) ? 'dark:text-green-600' : 'dark:text-red-600'} ml-1 p-0" >Must be a valid, non-existing year after 2020.</P>
-            </form>
-            <svelte:fragment slot="footer">
-                <button on:click={() => add_year(new_year)} disabled={!isDisabled}>Add</button>
-                <button color="alternative">Cancel</button>
-            </svelte:fragment>
-        </Modal> -->
+        <button class="btn-circle hover:base-100" onclick="addYear.showModal()" on:click={() => (new_year ="")}><Icon icon="mdi:plus-circle-outline" class="w-6 h-6 me-2 mt-3 ms-3" /></button>
+        <dialog id="addYear" class="modal">
+            <div class="modal-box  w-96">
+                <h3 class="font-bold text-lg">Add Year</h3>
+                <div class="modal-action justify-start">
+                    <form method="dialog">
+                        <input type="text" name="add_year" class="input input-bordered w-full max-w-xs" placeholder="" bind:value={new_year} />
+                        <p class="mt-2 text-xs {validate_input(new_year) ? 'text-green-600' : 'text-red-600'} ml-1 p-0" >Must be a valid, non-existing year after 2020.</p>
+                        <div class="flex h-10 pt-2 m-2 justify-center"></div>
+                        <button class="btn btn-primary min-w-20 mr-2" on:click={() => add_year(new_year)} disabled={!isDisabled}>Add</button>
+                        <!-- svelte-ignore missing-declaration -->
+                        <button class="btn btn-primary min-w-20" on:click|preventDefault={() => addYear.close()}>Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </dialog>
     </div>
     <div class="basis-6/12 flex">
         {#each months({locale}) as month, index (index)}
@@ -195,82 +200,30 @@
 </div>
 
 <div class="flex flex-row">
-    <div class="basis-3/12"></div>
+    <div class="basis-1/12"></div>
+    <div class="basis-1/12 min-w-32"></div>
+    <div class="basis-1/12 min-w-16"></div>
     <div class="basis-1/12 flex">
-        <div class="m-1 pt-10 mr-6 w-12">
+        <div class="m-1 p-1 pt-10 mr-6 w-12">
             <button class="btn btn-primary" on:click={()=>set_refusion_data(year)}>Save</button>
         </div>
         <div class="m-1 pt-10 w-12">
-            <button class="btn btn-secondary" on:click={() => (popupDelete = true)}>Delete</button>
-            <!-- <Modal bind:open={popupDelete} size="xs" autoclose outsideclose>
-                <div class="text-center">
-                    <ExclamationCircleOutline class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" />
-                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">This will delete the year {year} and all the monthly refusion data registered. </h3>
-                    <button class="btn btn-primary me-2"on:click={() => (delete_year(year))}>Delete</button>
-                    <button class="btn btn-primary">Cancel
-                    </button>
+            <!-- <button class="btn btn-secondary" on:click={() => (popupDelete = true)}>Delete</button> -->
+            <button class="btn btn-secondary" onclick="deleteYear.showModal()" on:click={() => (new_year ="")}>Delete</button>
+            <dialog id="deleteYear" class="modal">
+                <div class="modal-box  w-96">
+                    <form method="dialog">
+                        <h3 class="mb-5 text-lg font-normal text-gray-400">This will delete the year {year} and all the monthly refusion data registered. </h3>
+                        <button class="btn btn-secondary me-2"on:click={() => (delete_year(year))}>Delete</button>
+                        <!-- svelte-ignore missing-declaration -->
+                        <button class="btn btn-primary" on:click|preventDefault={() => deleteYear.close()}>Cancel</button> 
+                    </form>
                 </div>
-            </Modal> -->
+            </dialog>
         </div>
     </div>
     <div class="basis-8/12"></div>
 </div>
-
-
-<!-- 
-		<div class="settings">
-            {#each months({locale}) as month, index (index)}
-                {#if index<6}
-                    <div class="cell"> -->
-                        <!-- <Textfield variant="outlined" bind:value={_values[index]} label={month}></Textfield> -->
-                        <!-- <Label class="mb-2 ml-2" for="input-sm">{month}</Label>
-                        <buttonGroup class="w-full" size="md">
-                            <Input id="input-sm" type="email" placeholder="0,00" />
-                        </buttonGroup>
-                    </div>
-                {/if}
-            {/each}
-        </div> -->
-
-        <!-- <div class="settings-right">
-            <Wrapper>
-                <Iconbutton class="material-symbols-outlined" on:click={() => activeView('year')}>close</Iconbutton>
-            </Wrapper>
-        </div> -->
-
-
-		<!-- <div class="settings">
-            {#each months({locale: 'DK'}) as month, index (index)}
-                {#if index>5}
-                    <div class="cell"> -->
-                        <!-- <Textfield variant="outlined" bind:value={_values[index]} label={month}>
-                        <HelperText slot="helper">Helper Text</HelperText>
-                        </Textfield> -->
-                        <!-- <Label class="mb-2 ml-2" for="input-sm">{month}</Label>
-                        <buttonGroup class="w-full" size="md">
-                            <Input id="input-sm" type="email" placeholder="0,00" />
-                        </buttonGroup>
-                    </div>
-                {/if}
-            {/each}
-        </div> -->
-
-        <!-- <div class="cell-button">
-            <button variant="raised" color="secondary" on:click={()=>set_refusion_data(year)}>Save</button>
-            <Dialog bind:open aria-labelledby="simple-title" aria-describedby="simple-content">
-                <Title id="simple-title">WARNING</Title>
-                <Content id="simple-content">Chosing the 'Delete' button below will delete the year {year} and all the monthly refusion data registered. </Content>
-                <Actions>
-                    <button on:click={() => (delete_year(year))}>
-                    Delete
-                    </button>
-                    <button>
-                    Cancel
-                    </button>
-                </Actions>
-            </Dialog>
-            <button variant="raised" color="secondary" on:click={() => (open = true)}>Delete</button>
-        </div> -->
  
 
 

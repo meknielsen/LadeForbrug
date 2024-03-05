@@ -6,8 +6,10 @@
 	import {_view, _active, _treshold} from '$lib/stores.js';
 	import Chart from "$lib/components/Chart.svelte";
 	import {getChartDayData} from '$lib/chartData.js';
-	import { ChevronDoubleLeftOutline, ChevronLeftOutline, ChevronDoubleRightOutline, ChevronRightOutline } from 'flowbite-svelte-icons';
-	import { Button } from 'flowbite-svelte';
+	import Icon from '@iconify/svelte';
+
+	// import { ChevronDoubleLeftOutline, ChevronLeftOutline, ChevronDoubleRightOutline, ChevronRightOutline } from 'flowbite-svelte-icons';
+	// import { Button } from 'flowbite-svelte';
 	
     export let data, detail_link;
 
@@ -101,7 +103,7 @@
 		width: 80%;
 		margin: 0 auto;
 		padding-top: 5%;
-		padding-bottom: 5%;
+		padding-bottom: 2%;
 	}
 </style>
 
@@ -111,19 +113,25 @@
 
 <div class="center">
 	<div class='arrows'>
-	<Button color="light" class="w-2" href={null} on:click={() => previous_page()} on:keydown={() => previous_page()} disabled = {pp_disabled}><ChevronDoubleLeftOutline/></Button>
-	<Button color="light" class="w-2 mr-9" href={null} on:click={() => previous()} on:keydown={() => previous()} disabled = {p_disabled}><ChevronLeftOutline/></Button>
+	<!-- <button class="btn w-2" href={null} on:click={() => previous_page()} on:keydown={() => previous_page()} disabled = {pp_disabled}><ChevronDoubleLeftOutline/></button>
+	<button class="btn w-2 mr-9" href={null} on:click={() => previous()} on:keydown={() => previous()} disabled = {p_disabled}><ChevronLeftOutline/></button> -->
 	</div>
 	<div>
-		{#each Array(9) as _, index (index)}
-			{#if index + first <= last}
-				<Button color="{current === toLabel(index+first) ? 'dark' : 'light'}" class="border w-2 mx-1" href={null} on:click={() => (current = toLabel(index+first))}>{toLabel(index+first) }</Button>
-			{/if}
-		{/each}
+		<div class="join">
+			<button class="join-item btn btn-md" on:click={() => previous_page()} on:keydown={() => previous_page()}><Icon icon="ic:outline-keyboard-double-arrow-left" class="size-5"/></button>
+			<button class="join-item btn btn-md" on:click={() => previous()} on:keydown={() => previous()}><Icon icon="ic:outline-keyboard-arrow-left" class="size-5"/></button>
+			{#each Array(9) as _, index (index)}
+				{#if index + first <= last}
+					<button class="join-item btn btn-md {current === toLabel(index+first) ? 'btn-active' : ''}" href={null} on:click={() => (current = toLabel(index+first))}>{toLabel(index+first) }</button>
+				{/if}
+			{/each}
+			<button class="join-item btn btn-md" on:click={() => next()} on:keydown={() => next()}><Icon icon="ic:outline-keyboard-arrow-right" class="size-5"/></button>
+			<button class="join-item btn btn-md" on:click={() => next_page()} on:keydown={() => next_page()}><Icon icon="ic:outline-keyboard-double-arrow-right" class="size-5"/></button>
+		</div>
 	</div>
 	<div class='arrows'>
-		<Button color="light" class="w-2 ml-9" href={null} on:click={() => next()} on:keydown={() => next()} disabled = {n_disabled}><ChevronRightOutline/></Button>
-		<Button color="light"  class="w-2"href={null} on:click={() => next_page()} on:keydown={() => next_page()} disabled = {np_disabled}><ChevronDoubleRightOutline/></Button>
+		<!-- <button class="btn w-2 ml-9" href={null} on:click={() => next()} on:keydown={() => next()} disabled = {n_disabled}>single</button>
+		<button class="btn w-2"href={null} on:click={() => next_page()} on:keydown={() => next_page()} disabled = {np_disabled}>doubel</button> -->
 	</div>
 </div>
 
