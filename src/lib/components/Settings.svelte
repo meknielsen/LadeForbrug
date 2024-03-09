@@ -1,24 +1,9 @@
 <script>
 // @ts-nocheck
 
-    // import { Input } from 'flowbite-svelte';
-    // import { FloatingLabelInput, Helper, Label, Input, Closebutton } from 'flowbite-svelte';
-    // import { buttonGroup, button, Dropdown, DropdownItem, Select, Modal, P } from 'flowbite-svelte';
-    // import { DarkMode } from 'flowbite-svelte';
-
-    // import { ExclamationCircleOutline, PlusOutline, ArrowRightOutline  } from 'flowbite-svelte-icons';
-
-    import { months, numberString } from '$lib/utils.js';
+import { months, numberString } from '$lib/utils.js';
     import Icon from '@iconify/svelte';
     import { _active } from '$lib/stores.js';
-
-    // import Tooltip, { Wrapper, RichActions } from '@smui/tooltip';
-    // import Dialog, { Title, Content, Actions } from '@smui/dialog';
-
-    // import Icon from '@smui/textfield/icon';
-
-    // import { json } from '@sveltejs/kit';
-    // import { get_current_component } from 'svelte/internal';
 
     let refusion_data = [];
     let today = new Date();
@@ -144,11 +129,11 @@
                 <div class="modal-action justify-start">
                     <form method="dialog">
                         <input type="text" name="add_year" class="input input-bordered w-full max-w-xs" placeholder="" bind:value={new_year} />
-                        <p class="mt-2 text-xs {validate_input(new_year) ? 'text-green-600' : 'text-red-600'} ml-1 p-0" >Must be a valid, non-existing year after 2020.</p>
+                        <p class="mt-2 text-xs {validate_input(new_year) ? 'text-green-600' : 'text-red-500'} font-light ml-1 p-0" >Must be a valid, non-existing year after 2020.</p>
                         <div class="flex h-10 pt-2 m-2 justify-center"></div>
                         <button class="btn btn-primary min-w-20 mr-2" on:click={() => add_year(new_year)} disabled={!isDisabled}>Add</button>
                         <!-- svelte-ignore missing-declaration -->
-                        <button class="btn btn-primary min-w-20" on:click|preventDefault={() => addYear.close()}>Cancel</button>
+                        <button class="btn btn-accent min-w-20" on:click|preventDefault={() => addYear.close()}>Cancel</button>
                     </form>
                 </div>
             </div>
@@ -172,7 +157,7 @@
     </div>
     <div class="basis-1/12">
         <button class="btn-circle hover:base-100" on:click={() => activeView('year')}>
-            <Icon icon="mdi:close-circle-outline" class="w-8 h-8" />
+            <Icon icon="mdi:close-circle-outline" class="w-6 h-6" />
         </button>
     </div>
 </div>

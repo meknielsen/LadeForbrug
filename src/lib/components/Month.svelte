@@ -4,10 +4,6 @@
 	import Chart from "$lib/components/Chart.svelte";
 	import { getChartMonthData, getChartYearData, getLatestDataDate, totalMonth } from '$lib/chartData.js';
 	import {_view, _active, _treshold} from '$lib/stores.js';
-	import Icon from '@iconify/svelte';
-
-	// import { Button } from 'flowbite-svelte';
-	// import { ChevronLeftOutline, ChevronRightOutline } from 'flowbite-svelte-icons';
 
     export let data, detail_link;
 
@@ -20,7 +16,7 @@
 
 	let date = new Date(year, month, 0);
     let title = 'Strømforbrug dagligt';
-    let current, title_date, total_month, charging_month;
+    let current, title_date;
 	let p_disabled, n_disabled = undefined;
 
     let toLabel = (d) => {
@@ -48,8 +44,6 @@
 		chartdata = d[0];
 		labels = d[1];
 		title_date = getTitleDate(`${m}`);
-		// total_month = totalMonth(data.years, `${year}`, `${m}`)[0];
-		// charging_month = totalMonth(data.years, `${year}`, `${m}`)[1];
         if ( m >= 12 ) {n_disabled = true;} else {n_disabled = undefined;}
 		if ( m <= 1 ) {p_disabled = true;} else {p_disabled = undefined;}
 	}

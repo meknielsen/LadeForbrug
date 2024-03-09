@@ -8,9 +8,6 @@
 	import {_view, _active, _treshold} from '$lib/stores.js';
 	import { convertMonthDate } from "$lib/utils";
 
-	// import { Button } from 'flowbite-svelte';
-	// import { DarkMode } from 'flowbite-svelte';
-
     export let data, detail_link;
 	
 	let labels, chartdata;

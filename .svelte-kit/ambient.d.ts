@@ -52,6 +52,7 @@ declare module '$env/static/private' {
 	export const LOGNAME: string;
 	export const NAME: string;
 	export const WSL_INTEROP: string;
+	export const http_proxy: string;
 	export const PULSE_SERVER: string;
 	export const _: string;
 	export const npm_config_prefix: string;
@@ -60,6 +61,7 @@ declare module '$env/static/private' {
 	export const npm_config_cache: string;
 	export const npm_config_node_gyp: string;
 	export const PATH: string;
+	export const WSL_PAC_URL: string;
 	export const NODE: string;
 	export const npm_package_name: string;
 	export const WT_SESSION: string;
@@ -80,6 +82,7 @@ declare module '$env/static/private' {
 	export const npm_execpath: string;
 	export const NVM_CD_FLAGS: string;
 	export const npm_config_global_prefix: string;
+	export const HTTP_PROXY: string;
 	export const npm_command: string;
 	export const WSL2_GUI_APPS_ENABLED: string;
 	export const HOSTTYPE: string;
@@ -142,6 +145,7 @@ declare module '$env/dynamic/private' {
 		LOGNAME: string;
 		NAME: string;
 		WSL_INTEROP: string;
+		http_proxy: string;
 		PULSE_SERVER: string;
 		_: string;
 		npm_config_prefix: string;
@@ -150,6 +154,7 @@ declare module '$env/dynamic/private' {
 		npm_config_cache: string;
 		npm_config_node_gyp: string;
 		PATH: string;
+		WSL_PAC_URL: string;
 		NODE: string;
 		npm_package_name: string;
 		WT_SESSION: string;
@@ -170,6 +175,7 @@ declare module '$env/dynamic/private' {
 		npm_execpath: string;
 		NVM_CD_FLAGS: string;
 		npm_config_global_prefix: string;
+		HTTP_PROXY: string;
 		npm_command: string;
 		WSL2_GUI_APPS_ENABLED: string;
 		HOSTTYPE: string;

@@ -7,9 +7,6 @@
 	import Chart from "$lib/components/Chart.svelte";
 	import {getChartDayData} from '$lib/chartData.js';
 	import Icon from '@iconify/svelte';
-
-	// import { ChevronDoubleLeftOutline, ChevronLeftOutline, ChevronDoubleRightOutline, ChevronRightOutline } from 'flowbite-svelte-icons';
-	// import { Button } from 'flowbite-svelte';
 	
     export let data, detail_link;
 
@@ -51,10 +48,14 @@
 		}
 	}
 
+	// working on this ... 6/3/2024
 	let previous = () => {
-		console.log(Number(current))
+		console.log('Now: ' + Number(current))
 		if ( toLabel(Number(current)) > 1 ) current = toLabel(Number(current) - 1);
 		if ( Number(current) < first && toLabel(Number(current)) > 1 ) first = first - 9;	
+		console.log('Next: ' + Number(current))
+		console.log('Last: ' + last)
+		console.log('First: ' + first)
 	}
 
 	let previous_page = () => {
@@ -113,8 +114,6 @@
 
 <div class="center">
 	<div class='arrows'>
-	<!-- <button class="btn w-2" href={null} on:click={() => previous_page()} on:keydown={() => previous_page()} disabled = {pp_disabled}><ChevronDoubleLeftOutline/></button>
-	<button class="btn w-2 mr-9" href={null} on:click={() => previous()} on:keydown={() => previous()} disabled = {p_disabled}><ChevronLeftOutline/></button> -->
 	</div>
 	<div>
 		<div class="join">
@@ -130,8 +129,6 @@
 		</div>
 	</div>
 	<div class='arrows'>
-		<!-- <button class="btn w-2 ml-9" href={null} on:click={() => next()} on:keydown={() => next()} disabled = {n_disabled}>single</button>
-		<button class="btn w-2"href={null} on:click={() => next_page()} on:keydown={() => next_page()} disabled = {np_disabled}>doubel</button> -->
 	</div>
 </div>
 

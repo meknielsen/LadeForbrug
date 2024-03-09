@@ -4,8 +4,7 @@
       import "../app.pcss";
       import { _active, _view } from '$lib/stores.js';
       import Icon from '@iconify/svelte';
-      import { onMount } from 'svelte';
-    
+      
       let isModalOpen = false;
       let openD = false;
       let btnClass = 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg ps-1 w-7';

@@ -37,5 +37,3 @@ export const actions = {
 	  }
 	}
   };
-
-// should not be needed since all the logic happens in subfolders
