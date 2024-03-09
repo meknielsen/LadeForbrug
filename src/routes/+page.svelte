@@ -5,7 +5,7 @@
     import Day from '$lib/components/Day.svelte'
     import Settings from '$lib/components/Settings.svelte'
     import Summary from '$lib/components/Summary.svelte'
-    import UploadData from '$lib/components/UploadData.svelte'
+    // import UploadData from '$lib/components/UploadData.svelte'
     import {_data, _view, _active} from '$lib/stores.js';
 
     export let data;
@@ -31,6 +31,6 @@
 {#if $_active === 'summary'}
     <Summary data={$_data}/>
 {/if}
-{#if $_active === 'load'}
+<!-- {#if $_active === 'load'}
     <UploadData/>
-{/if}
+{/if} -->
