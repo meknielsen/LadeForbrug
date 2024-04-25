@@ -2,11 +2,11 @@
 import { loadData } from '$lib/db.js';
 import { json } from '@sveltejs/kit';
 
-export function GET() {
+// export function GET() {
 	
-    let r = "Loading data from file ...";
+//     let r = "Loading data from file ...";
 
-    loadData();
+//     loadData();
 
-	return json(r);
-}
+// 	return json(r);
+// }

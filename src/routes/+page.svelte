@@ -14,6 +14,11 @@
 
     $_data = data;
 
+    // let test = {'2023': {'10': {'01': [{'price': '01'}, {'price': '02'}, {'price': '03'}, {'price': '04'}]}}}
+    // console.log(test['2023']['10'])
+    // test = {'2023': {'10': {'01': [{'price': '05'}, {'price': '06'}, {'price': '07'}]}}}
+    // console.log(test['2023']['10'])
+
 </script>
 
 {#if $_active === 'year'}
@@ -31,6 +36,6 @@
 {#if $_active === 'summary'}
     <Summary data={$_data}/>
 {/if}
-<!-- {#if $_active === 'load'}
-    <UploadData/>
-{/if} -->
+
+
+<!-- {test['2023']['10']} -->

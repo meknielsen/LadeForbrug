@@ -3,8 +3,6 @@
 process.env.NODE_NO_WARNINGS = 'stream/web';
 process.noDeprecation = true;
 
-import * as fs from 'fs';
-import { parse } from 'csv-parse';
 import { JsonDB, Config } from 'node-json-db';
 
 export var db = new JsonDB(new Config("ChargingData", true, true, '/'));

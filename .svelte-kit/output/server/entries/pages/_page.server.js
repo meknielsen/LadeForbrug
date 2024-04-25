@@ -1,5 +1,4 @@
 import { d as db, r as refusion_db, l as loadData } from "../../chunks/db.js";
-import "../../chunks/index.js";
 process.env.NODE_NO_WARNINGS = "stream/web";
 async function load({}) {
   const years = await db.getData(`/`);

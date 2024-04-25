@@ -4,13 +4,25 @@
 process.env.NODE_NO_WARNINGS = 'stream/web';
 
 import { db, loadData, refusion_db } from '$lib/db.js';
-import { fail, writeFile, FileReader } from '@sveltejs/kit';
+import { MongoClient } from 'mongodb';
+
+// Should be taken from env
+const uri = "mongodb+srv://dbuser:c9xVny1kebf8Qsgg@cluster0.h3vfwbk.mongodb.net/";
+const client = new MongoClient(uri);
+const database = client.db('homecharger');
+const chargingData = database.collection('chargingData');
+const refusionData = database.collection('refusionData');//new
 
 /** @param {Parameters<import('./$types').PageServerLoad>[0]} event */
 export async function load({}) {
 
-	const years = await db.getData(`/`);
-	const refusion_data = await refusion_db.getData(`/`);
+	const years = await chargingData.findOne({}, {projection: {_id: 0}}); // NO INTERNET
+	// const years = await db.getData(`/`);
+	// const refusion_data = await refusion_db.getData(`/`);
+	const refusion_data = await refusionData. findOne({}, {projection: {_id:0}}); // NO INTERNET
+
+	// Ensures that the client will close when you finish/error
+	await client.close(); // NO INTERNET
 
 	return {
 		years,

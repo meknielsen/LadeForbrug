@@ -76,8 +76,7 @@
   "src/routes/+page.server.js": {
     "file": "entries/pages/_page.server.js",
     "imports": [
-      "_db.js",
-      "_index.js"
+      "_db.js"
     ],
     "isEntry": true,
     "src": "src/routes/+page.server.js"

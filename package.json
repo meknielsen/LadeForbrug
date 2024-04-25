@@ -7,11 +7,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
-    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
-    "prepare": "npm run smui-theme-light && npm run smui-theme-dark",
-    "smui-theme-light": "smui-theme compile static/smui-light.css -i src/theme",
-    "smui-theme-dark": "smui-theme compile static/smui-dark.css -i src/theme/dark",
-    "theme": "npm run smui-theme-light && npm run smui-theme-dark"
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch"
   },
   "devDependencies": {
     "@iconify/svelte": "^3.1.4",
@@ -32,8 +28,8 @@
   "dependencies": {
     "chart.js": "^4.3.0",
     "csv": "^6.3.1",
+    "mongodb": "^6.5.0",
     "node-json-db": "^2.2.0",
-    "sqlite3": "^5.1.6",
     "svelte-chartjs": "^3.1.5"
   }
 }
