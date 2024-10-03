@@ -22,7 +22,7 @@ export async function GET({params}) {
  * @returns 
  */
 export async function PUT({ params, request }) {
-     var data = await request.json();
+    var data = await request.json();
     refusion_db.push(`/`, data, true);
     return new Response(JSON.stringify(data), {status: 200})
 }

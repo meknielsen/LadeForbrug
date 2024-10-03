@@ -44,6 +44,7 @@
             <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
               <li ><a href={null} on:click={() => activeView('settings')} on:click= {() => document.activeElement.blur()} on:keydown= {() => document.activeElement.blur()}>Settings</a></li> 
               <li ><a href={null} on:click={() => activeView('summary')} on:click= {() => document.activeElement.blur()} on:keydown= {() => document.activeElement.blur()}>Summary</a></li> 
+              <!-- UPLOAD file section -->
               <li ><a href={null} onclick="load_data.showModal()">Load Data</a></li>
               <dialog id="load_data" class="modal" >
                 <div class="modal-box">

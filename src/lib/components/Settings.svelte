@@ -121,7 +121,7 @@ import { months, numberString } from '$lib/utils.js';
               </select>
         </label>
     </div>
-    <div class="basis-1/12 mt-8 min-w-16">
+        <div class="basis-1/12 mt-8 min-w-16">
         <button class="btn-circle hover:base-100" onclick="addYear.showModal()" on:click={() => (new_year ="")}><Icon icon="mdi:plus-circle-outline" class="w-6 h-6 me-2 mt-3 ms-3" /></button>
         <dialog id="addYear" class="modal">
             <div class="modal-box  w-96">
@@ -209,6 +209,7 @@ import { months, numberString } from '$lib/utils.js';
     </div>
     <div class="basis-8/12"></div>
 </div>
+
  
 
 

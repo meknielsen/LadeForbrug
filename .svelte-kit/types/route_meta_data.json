@@ -10,5 +10,8 @@
 	],
 	"/api/settings/[year]": [
 		"src/routes/api/settings/[year]/+server.js"
+	],
+	"/[oid]": [
+		"src/routes/[oid]/+page.server.js"
 	]
 }
