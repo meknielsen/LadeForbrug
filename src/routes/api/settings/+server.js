@@ -1,5 +1,10 @@
-import { json } from '@sveltejs/kit';
-import { refusion_db } from '$lib/db.js';
+import { MongoClient, ObjectId } from 'mongodb';
+
+// Should be taken from env
+const uri = "mongodb+srv://dbuser:c9xVny1kebf8Qsgg@cluster0.h3vfwbk.mongodb.net/";
+const client = new MongoClient(uri);
+const database = client.db('homecharger');
+const refusionData = database.collection('refusionData');
 
 /**
  * 
@@ -8,21 +13,10 @@ import { refusion_db } from '$lib/db.js';
  */
 export async function GET({params}) {
     try {
-        var data = await refusion_db.getData(`/`);
-        return new Response(JSON.stringify(data), {status: 200})
+        const refusion_data = await refusionData.findOne({}, {projection: {_id:0}});
+        return new Response(JSON.stringify(refusion_data), {status: 200})
     } catch(error) {
         console.log("Error: " + error)
         return new Response(JSON.stringify('No data ...'))
     };
-}
-
-/**
- * 
- * @param {*} request : resource 
- * @returns 
- */
-export async function PUT({ params, request }) {
-    var data = await request.json();
-    refusion_db.push(`/`, data, true);
-    return new Response(JSON.stringify(data), {status: 200})
 }

@@ -9,7 +9,7 @@ export function getChartDayData(day_obj, treshold) {
   let hData = [];
   let total_data = [[]];
 
-  treshold = 10;
+  treshold = 8;
   
   for ( let i = 0; day_obj !== undefined && i < day_obj.length; i++ ) {
     if ( day_obj[i].price.replace(/,/g, '.') < treshold) {
@@ -99,7 +99,7 @@ export function totalDay(day_obj, treshold) {
   let total, avg, sum_avg, days_avg, basis = 0;
   total = avg = sum_avg = days_avg = basis = 0;
 
-  treshold = 10;
+  treshold = 5;
   
   for (let i = 0; day_obj !== undefined && i < day_obj.length; i++) {
     if ( day_obj[i] !== null && day_obj[i] !== undefined) {
@@ -154,7 +154,26 @@ export function totalYear(data_obj, year, treshold) {
 
 /**
  * 
- * @param {*} data_obj de
+ * @param {*} data_obj 
+ * @param {*} year 
+ * @param {*} quarter The given quarter in numeric notation.
+ * @param {*} threshold 
+ */
+export function totalQuarter(data_obj, year, quarter, threshold) {
+
+  let charging_total = 0;
+  let total = 0;
+  for ( let i = 0; i < 12; i++) {
+    total += parseFloat(totalMonth(data_obj, year, [numberString(i+1)], treshold)[0]);
+    charging_total += parseFloat(totalMonth(data_obj, year, [numberString(i+1)], treshold)[1]);
+  }
+
+  return [total, charging_total];
+}
+
+/**
+ * 
+ * @param {*} data_obj 
  * @returns 
  */
 export function getLatestDataDate(data_obj) {

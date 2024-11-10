@@ -1,9 +1,11 @@
 <script>
 // @ts-nocheck
 
-import { months, numberString } from '$lib/utils.js';
+    import { months, numberString } from '$lib/utils.js';
     import Icon from '@iconify/svelte';
     import { _active } from '$lib/stores.js';
+
+    export let data;
 
     let refusion_data = [];
     let today = new Date();
@@ -60,8 +62,7 @@ import { months, numberString } from '$lib/utils.js';
     }
 
     let get_refusion_data = async (year) => {
-        const response = await fetch(`api/settings/`).then((r) => r.json());
-        refusion_data = response;
+        refusion_data = await fetch(`api/settings/`).then((r) => r.json());
         for (let i = 0; i < Object.keys(refusion_data).length; i++ ) {
             years[i] = { value: Object.keys(refusion_data)[i], name: Object.keys(refusion_data)[i]}
             if ( Object.keys(refusion_data)[i] === year ) {
@@ -74,19 +75,19 @@ import { months, numberString } from '$lib/utils.js';
                 }
             }
         }
-        console.log(years)
     }
 
-    let update_refusion_data = (data) => {
+    let update_refusion_data = (d) => {
         let values = [];
         for ( let i= 0; i < 12; i++ ) {
-            if ( data[i] == "" ) {
+            if ( d[i] == "" ) {
                 values[i] = "0,00";
             } else {
-                values[i] = data[i];
+                values[i] = d[i];
             }
         }
-        refusion_data[year] = values
+        data.refusion_data[year] = refusion_data[year] = values;
+        // data.refusion_data[year] = values
     }
 
     let activeView = (s) => {

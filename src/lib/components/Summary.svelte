@@ -34,12 +34,36 @@
             {#each years as year, _i}
                 <div>
                     <div class="basis-3/12 p-2">
-                        <div class="card w-60 bg-neutral text-neutral-content">
+                        <div class="card w-120 bg-neutral text-neutral-content">
                             <div class="card-body items-center text-center">
                                 <button class="btn btn-ghost min-w-40 m-2 hover:bg-neutral" size="xl" on:click={() => activeView(year)} on:keydown={() => activeView(year)}><h5 class="text-3xl font-bold tracking-tight">{year}</h5></button>
-                                <button class="btn min-w-48 m-2"><Icon icon="mdi:home-lightning-bolt" style="color: rgba(54, 162, 235, 1)" class="w-6 h-6 me-2" />DKK {total(year)}</button> 
-                                <button class="btn min-w-48 m-2"><Icon icon="mdi:home-battery" style="color: rgba(255, 99, 132, 1)" class="w-6 h-6 me-2" />DKK {total_charging(year)}</button>
-                                <button class="btn min-w-48 m-2"><Icon icon="mdi:battery-charging-80" style="color: rgb(75, 192, 192)" class="w-6 h-6 me-2" />DKK {total_pay(year)}</button>
+                                <div class="stats shadow">
+                                    <div class="stat place-items-right">
+                                        <div class="stat-figure text-primary">
+                                            <Icon icon="mdi:home-lightning-bolt" class="w-6 h-6 me-2 text-primary" />
+                                        </div>
+                                        <div class="stat-title text-left">Total housing usage</div>
+                                        <div class="stat-value text-primary">DKK {total(year)}</div>
+                                    </div>
+                                </div>
+                                <div class="stats shadow">
+                                    <div class="stat place-items-right">
+                                        <div class="stat-figure text-secondary">
+                                            <Icon icon="mdi:home-battery" class="w-6 h-6 me-2 text-secondary" />
+                                        </div>
+                                        <div class="stat-title text-left">Total charging usage</div>
+                                        <div class="stat-value text-secondary">DKK {total_charging(year)}</div>
+                                    </div>
+                                </div>
+                                <div class="stats shadow">
+                                    <div class="stat place-items-right">
+                                        <div class="stat-figure text-accent">
+                                            <Icon icon="mdi:battery-charging-80" class="w-6 h-6 me-2 text-accent" />
+                                        </div>
+                                        <div class="stat-title text-left">Total payment</div>
+                                        <div class="stat-value text-accent">DKK {total_pay(year)}</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

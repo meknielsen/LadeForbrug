@@ -3,6 +3,7 @@
 process.env.NODE_NO_WARNINGS = 'stream/web';
 
 import { loadData, refusion_db } from '$lib/db.js';
+import { CONNREFUSED } from 'dns';
 import { MongoClient, ObjectId } from 'mongodb';
 
 // Should be taken from env
@@ -12,15 +13,17 @@ const database = client.db('homecharger');
 const chargingData = database.collection('chargingData');
 const refusionData = database.collection('refusionData');
 const options = {projection: { _id: 1}  };
-var objectID;
+// var objectID;
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({}) {
 
-	const years = JSON.parse(JSON.stringify(await chargingData.findOne({}, {projection: {_id:0}})));
+	let years_data = JSON.parse(JSON.stringify(await chargingData.findOne()));
+	const objectID = years_data._id;
+	const { _id, ...rest } = years_data;
+	const years = rest;
+
 	const refusion_data = await refusionData.findOne({}, {projection: {_id:0}});
-	
-	// objectID = years._id;
 
 	// Ensures that the client will close when you finish/error
 	// await client.close(); // Do not close here ... it will disrupt when loading file data
@@ -43,10 +46,7 @@ export const actions = {
 		const filetext = await fileName.text();
 
 		n_data = loadData(filetext);
-		console.log(n_data);
 
-		console.log('testint');
-	
 		let c_data = JSON.parse(JSON.stringify(await chargingData.findOne({}, {projection: {_id:0}})));
 
 		function merge(c, n) {
@@ -59,11 +59,8 @@ export const actions = {
 		}
 		
 		c_data = merge(c_data, n_data);
-		console.log(c_data['2024'])
-
 
 		const result = await chargingData.updateOne({_id: new ObjectId('66e8546314ec1c4939f7bdda')}, {$set: c_data})
-		// const result = await chargingData.insertOne(n_data)
 
 		return {  };
 
@@ -74,7 +71,6 @@ export const actions = {
 	}
 }
   
-
   async function storeData(data) {
 
 

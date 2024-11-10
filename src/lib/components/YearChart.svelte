@@ -21,7 +21,7 @@
                     labels,
                     datasets: [
                         {
-                            label,
+                            label: 'Home',
                             data: data[0],
                             backgroundColor: [
                                 "rgba(54, 162, 235, 0.2)",
@@ -43,7 +43,7 @@
                             borderWidth: 1,
                         },
                         {
-                            label: 'Refusion',
+                            label: 'Charging',
                             data: data[2],
                             backgroundColor: [
                                 'rgba(75, 192, 192, 0.2)'
@@ -77,7 +77,7 @@
                                     let date = new Date('2023', '05', '05', context.parsed.x);
     
                                     if (label) {
-                                        label = ' ';
+                                        label = ' ' + label + ': ';
                                     }
                                     if (context.parsed.y !== null) {
                                         label += new Intl.NumberFormat('da-DK', { style: 'currency', currency: 'DKK' }).format(context.parsed.y);
@@ -86,10 +86,10 @@
                                     }
                                     return label;
                                 },
-                                title: function(contextItems) {
-                                    return 'Forbrug: ';
+                                // title: function(contextItems) {
+                                //     return 'Forbrug: ';
     
-                                },
+                                // },
                             }
                         }
                     }
