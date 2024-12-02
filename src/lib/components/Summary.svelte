@@ -40,7 +40,7 @@
                                 <div class="stats shadow">
                                     <div class="stat place-items-right">
                                         <div class="stat-figure text-primary">
-                                            <Icon icon="mdi:home-lightning-bolt" class="w-6 h-6 me-2 text-primary" />
+                                            <Icon icon="mdi:home-lightning-bolt" class="w-8 h-8 me-2 text-primary" />
                                         </div>
                                         <div class="stat-title text-left">Total housing usage</div>
                                         <div class="stat-value text-primary">DKK {total(year)}</div>
@@ -49,7 +49,7 @@
                                 <div class="stats shadow">
                                     <div class="stat place-items-right">
                                         <div class="stat-figure text-secondary">
-                                            <Icon icon="mdi:home-battery" class="w-6 h-6 me-2 text-secondary" />
+                                            <Icon icon="mdi:home-battery" class="w-8 h-8 me-2 text-secondary" />
                                         </div>
                                         <div class="stat-title text-left">Total charging usage</div>
                                         <div class="stat-value text-secondary">DKK {total_charging(year)}</div>
@@ -58,7 +58,7 @@
                                 <div class="stats shadow">
                                     <div class="stat place-items-right">
                                         <div class="stat-figure text-accent">
-                                            <Icon icon="mdi:battery-charging-80" class="w-6 h-6 me-2 text-accent" />
+                                            <Icon icon="mdi:battery-charging-80" class="w-8 h-8 me-2 text-accent" />
                                         </div>
                                         <div class="stat-title text-left">Total payment</div>
                                         <div class="stat-value text-accent">DKK {total_pay(year)}</div>
