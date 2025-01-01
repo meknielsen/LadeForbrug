@@ -36,7 +36,7 @@ export async function PUT({ params, request }) {
     refusion_data[params.year] = data;
     console.log(refusion_data[params.year])
     // console.log(data)
-    refusion_db.push(`/${params.year}/`, data, true);
+    // refusion_db.push(`/${params.year}/`, data, true);
 
     const result = await refusionData.updateOne({_id: new ObjectId('65f2280bdad5def9c1e2ad10')}, {$set: refusion_data})
     

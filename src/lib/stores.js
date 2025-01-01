@@ -33,3 +33,4 @@ export const _view = writable({
 export const _data = writable({})
 export const _active = writable()
 export const _treshold = writable(0);
+export const _user = writable({_id: '', name: '', email: ''})

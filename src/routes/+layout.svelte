@@ -29,7 +29,7 @@
       <a href="/" class="btn btn-ghost text-xl" on:click={() => activeView('summary')} on:keydown={() => activeView('summary')}>Ladeforbrug</a>
     </div>
     <div class="navbar-center">
-      <a class="btn btn-ghost" href={null} on:click={() => activeView('summary')} on:keydown={() => activeView('summary')}>Not Home</a>
+      <a class="btn btn-ghost" href={null} on:click={() => activeView('summary')} on:keydown={() => activeView('summary')}>Home</a>
       <a class="btn btn-ghost"href={null} on:click={() => activeView('year')}>År</a>
       <a class="btn btn-ghost" href={null} on:click={() => activeView('month')}>Måned</a>
       <!-- <a class="btn btn-ghost" on:click={() => activeView('day')}>Dag</a> -->

@@ -7,6 +7,7 @@
     import Summary from '$lib/components/Summary.svelte'
     // import UploadData from '$lib/components/UploadData.svelte'
     import {_data, _view, _active} from '$lib/stores.js';
+    import { goto } from '$app/navigation';
 
     export let data;
 
@@ -14,6 +15,9 @@
 
     $_data = data;
 
+    
+
 </script>
+
 
 No data here
