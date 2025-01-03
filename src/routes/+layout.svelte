@@ -26,14 +26,16 @@
 
 <div class="navbar bg-neutral text-neutral-content">
     <div class="navbar-start">
-      <a href="/" class="btn btn-ghost text-xl" on:click={() => activeView('summary')} on:keydown={() => activeView('summary')}>Ladeforbrug</a>
+      <a href="/" class="btn btn-ghost text-xl" >Ladeforbrug</a>
     </div>
     <div class="navbar-center">
-      <a class="btn btn-ghost" href={null} on:click={() => activeView('summary')} on:keydown={() => activeView('summary')}>Home</a>
+      <!-- <a class="btn btn-ghost" href={null} on:click={() => activeView('summary')} on:keydown={() => activeView('summary')}>Home</a>
       <a class="btn btn-ghost"href={null} on:click={() => activeView('year')}>År</a>
-      <a class="btn btn-ghost" href={null} on:click={() => activeView('month')}>Måned</a>
+      <a class="btn btn-ghost" href={null} on:click={() => activeView('month')}>Måned</a> -->
       <!-- <a class="btn btn-ghost" on:click={() => activeView('day')}>Dag</a> -->
     </div>
+
+    <!-- Dropdown logic START ... -->
     <div class="flex justify-end flex-1 px-2">
         <div class="flex items-stretch">
           <div class="dropdown dropdown-end" >
@@ -69,6 +71,7 @@
           </div>
         </div>
     </div>
+    <!-- Dropdown logic END ... -->
 </div>
 
 <div class="flexor-content">

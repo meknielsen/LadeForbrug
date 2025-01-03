@@ -19,5 +19,14 @@
 
 </script>
 
-
-No data here
+<div class="hero bg-base-200 min-h-screen">
+    <div class="hero-content text-center">
+      <div class="max-w-md">
+        <h1 class="text-5xl font-bold">Oversigt over Ladeforbrug </h1>
+        <p class="py-6">
+          Få et nemt og tydeligt oversigt over strømforbrug til elbil hjemmelader fra OK. 
+        </p>
+        <button class="btn btn-primary">Get Started</button>
+      </div>
+    </div>
+  </div>
