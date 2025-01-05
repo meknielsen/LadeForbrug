@@ -5,7 +5,7 @@
     import Icon from '@iconify/svelte';
     import { _active, _view } from '$lib/stores.js';
   
-    export let data;
+  let { data } = $props();
 
     let s = 0;
     let locale = 'da-DK';
@@ -36,7 +36,7 @@
                     <div class="basis-3/12 p-2">
                         <div class="card w-120 bg-neutral text-neutral-content">
                             <div class="card-body items-center text-center">
-                                <button class="btn btn-ghost min-w-40 m-2 hover:bg-neutral" size="xl" on:click={() => activeView(year)} on:keydown={() => activeView(year)}><h5 class="text-3xl font-bold tracking-tight">{year}</h5></button>
+                                <button class="btn btn-ghost min-w-40 m-2 hover:bg-neutral" size="xl" onclick={() => activeView(year)} onkeydown={() => activeView(year)}><h5 class="text-3xl font-bold tracking-tight">{year}</h5></button>
                                 <div class="stats shadow">
                                     <div class="stat place-items-right">
                                         <div class="stat-figure text-primary">

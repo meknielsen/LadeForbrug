@@ -1,3 +1,7 @@
+<!-- @migration-task Error while migrating Svelte code: Event attribute must be a JavaScript expression, not a string
+https://svelte.dev/e/attribute_invalid_event_handler -->
+<!-- @migration-task Error while migrating Svelte code: Event attribute must be a JavaScript expression, not a string
+https://svelte.dev/e/attribute_invalid_event_handler -->
 <script>
 // @ts-nocheck
 
@@ -123,7 +127,7 @@
         </label>
     </div>
         <div class="basis-1/12 mt-8 min-w-16">
-        <button class="btn-circle hover:base-100" onclick="addYear.showModal()" on:click={() => (new_year ="")}><Icon icon="mdi:plus-circle-outline" class="w-6 h-6 me-2 mt-3 ms-3" /></button>
+        <!-- <button class="btn-circle hover:base-100" onclick="addYear.showModal()" on:click={() => (new_year ="")}><Icon icon="mdi:plus-circle-outline" class="w-6 h-6 me-2 mt-3 ms-3" /></button> -->
         <dialog id="addYear" class="modal">
             <div class="modal-box  w-96">
                 <h3 class="font-bold text-lg">Add Year</h3>
@@ -195,7 +199,7 @@
         </div>
         <div class="m-1 pt-10 w-12">
             <!-- <button class="btn btn-secondary" on:click={() => (popupDelete = true)}>Delete</button> -->
-            <button class="btn btn-secondary" onclick="deleteYear.showModal()" on:click={() => (new_year ="")}>Delete</button>
+            <!-- <button class="btn btn-secondary" onclick="deleteYear.showModal()" on:click={() => (new_year ="")}>Delete</button> -->
             <dialog id="deleteYear" class="modal">
                 <div class="modal-box  w-96">
                     <form method="dialog">

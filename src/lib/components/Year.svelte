@@ -1,6 +1,10 @@
 <script>
 // @ts-nocheck
 
+	import { run } from 'svelte/legacy';
+
+// @ts-nocheck
+
 	/** @type {import('./$types').PageData} */
 
 	import YearChart from "$lib/components/YearChart.svelte";
@@ -8,12 +12,12 @@
 	import {_view, _active, _treshold} from '$lib/stores.js';
 	import { convertMonthDate } from "$lib/utils";
 
-    export let data, detail_link;
+	let { data, detail_link = $bindable() } = $props();
 	
-	let labels, chartdata;
+	let labels = $state(null), chartdata = $state(null);
 	let mode = 'year';
 	let title = 'Strømforbrug månedligt'
-    let title_date = $_view.year;
+    let title_date = $state($_view.year);
 
 	detail_link = undefined;
 
@@ -36,8 +40,12 @@
 		$_view.year = y;
 	}
 	
-	$: yearChart($_view.year);
-	$: setMonth(detail_link);
+	run(() => {
+		yearChart($_view.year);
+	});
+	run(() => {
+		setMonth(detail_link);
+	});
 
 </script>
 
@@ -56,14 +64,14 @@
 	}
 </style>
 
-<div class='graph' on:click={() => ($_active='month')} on:keydown={() => ($_active='month')} role="link" tabindex="0">
+<div class='graph' onclick={() => ($_active='month')} onkeydown={() => ($_active='month')} role="link" tabindex="0">
 	<YearChart {chartdata} {labels} label={title_date} {title} bind:detail_link/>
 </div>
 
 <div class="center">
 	<div class="join">
 		{#each Object.keys(data.years) as y}
-			<button class="join-item btn btn-md {$_view.year === y ? 'btn-active' : ''}" href={null} on:click={() => setYear(y)} on:keydown={() => setYear(y)}>{y}</button>
+			<button class="join-item btn btn-md {$_view.year === y ? 'btn-active' : ''}" href={null} onclick={() => setYear(y)} onkeydown={() => setYear(y)}>{y}</button>
 		{/each}
 	</div>
 </div>

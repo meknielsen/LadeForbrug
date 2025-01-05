@@ -1,23 +1,26 @@
 <script>
 // @ts-nocheck
 
+	import { run } from 'svelte/legacy';
+
+// @ts-nocheck
+
 	/** @type {import('./$types').PageData} */
 
 	import {_view, _active, _treshold} from '$lib/stores.js';
 	import Chart from "$lib/components/Chart.svelte";
 	import {getChartDayData} from '$lib/chartData.js';
 	import Icon from '@iconify/svelte';
-	
-    export let data, detail_link;
+
+	let { data, detail_link = $bindable() } = $props();
 
 	let view = $_view;
 	let year = view.year;
 	let month = view.month;
 	let day = view.day;
 
-	let labels, chartdata, first, title_date;
+	let labels = $state(), chartdata = $state(), first = $state(), title_date = $state(), current = $state(day)
 
-	let current = day;
 	let date = new Date(year, month, 0);
 	let title = 'Strømforbrug hver time';
     let last = date.getDate();
@@ -30,12 +33,17 @@
     }
 
 	first = 1;
-	if ( Number(current) > 9  ) first = 6; 
-	if ( Number(current) > 14 ) first = 11; 
-	if ( Number(current) > 19 ) first = 16;
-	if ( Number(current) > 24 ) first = 21;
-	if ( Number(current) > 29 ) first = 26;
-	
+	// svelte-ignore state_referenced_locally
+		if ( Number(current) > 9  ) first = 6; 
+	// svelte-ignore state_referenced_locally
+		if ( Number(current) > 14 ) first = 11; 
+	// svelte-ignore state_referenced_locally
+		if ( Number(current) > 19 ) first = 16;
+	// svelte-ignore state_referenced_locally
+		if ( Number(current) > 24 ) first = 21;
+	// svelte-ignore state_referenced_locally
+		if ( Number(current) > 29 ) first = 26;
+
 	let next = () => {
 		if ( toLabel(Number(current) + 1) <= last ) current = toLabel(Number(current) + 1);
 		if ( current > (first + 2*page) ) first = first + 9;
@@ -87,7 +95,9 @@
 
 	}
 
-	$: dayChart(current)
+	run(() => {
+		dayChart(current)
+	});
 
 </script>
 
@@ -108,7 +118,7 @@
 	}
 </style>
 
-<div class='graph' on:click={() => ($_active='month')} on:keydown={() => ($_active='month')} role="link" tabindex="0">
+<div class='graph' onclick={() => ($_active='month')} onkeydown={() => ($_active='month')} role="link" tabindex="0">
 	<Chart {chartdata} {labels} label={title_date} {title} bind:detail_link/>
 </div>
 
@@ -117,15 +127,15 @@
 	</div>
 	<div>
 		<div class="join">
-			<button class="join-item btn btn-md" on:click={() => previous_page()} on:keydown={() => previous_page()}><Icon icon="ic:outline-keyboard-double-arrow-left" class="size-5"/></button>
-			<button class="join-item btn btn-md" on:click={() => previous()} on:keydown={() => previous()}><Icon icon="ic:outline-keyboard-arrow-left" class="size-5"/></button>
+			<button class="join-item btn btn-md" onclick={() => previous_page()} onkeydown={() => previous_page()}><Icon icon="ic:outline-keyboard-double-arrow-left" class="size-5"/></button>
+			<button class="join-item btn btn-md" onclick={() => previous()} onkeydown={() => previous()}><Icon icon="ic:outline-keyboard-arrow-left" class="size-5"/></button>
 			{#each Array(9) as _, index (index)}
 				{#if index + first <= last}
-					<button class="join-item btn btn-md {current === toLabel(index+first) ? 'btn-active' : ''}" href={null} on:click={() => (current = toLabel(index+first))}>{toLabel(index+first) }</button>
+					<button class="join-item btn btn-md {current === toLabel(index+first) ? 'btn-active' : ''}" href={null} onclick={() => (current = toLabel(index+first))}>{toLabel(index+first) }</button>
 				{/if}
 			{/each}
-			<button class="join-item btn btn-md" on:click={() => next()} on:keydown={() => next()}><Icon icon="ic:outline-keyboard-arrow-right" class="size-5"/></button>
-			<button class="join-item btn btn-md" on:click={() => next_page()} on:keydown={() => next_page()}><Icon icon="ic:outline-keyboard-double-arrow-right" class="size-5"/></button>
+			<button class="join-item btn btn-md" onclick={() => next()} onkeydown={() => next()}><Icon icon="ic:outline-keyboard-arrow-right" class="size-5"/></button>
+			<button class="join-item btn btn-md" onclick={() => next_page()} onkeydown={() => next_page()}><Icon icon="ic:outline-keyboard-double-arrow-right" class="size-5"/></button>
 		</div>
 	</div>
 	<div class='arrows'>

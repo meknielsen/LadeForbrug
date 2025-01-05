@@ -1,22 +1,26 @@
 <script>
 // @ts-nocheck
 
+	import { run } from 'svelte/legacy';
+
+// @ts-nocheck
+
 	import Chart from "$lib/components/Chart.svelte";
 	import { getChartMonthData, getChartYearData, getLatestDataDate, totalMonth } from '$lib/chartData.js';
 	import {_view, _active, _treshold} from '$lib/stores.js';
 
-    export let data, detail_link;
+	let { data, detail_link = $bindable() } = $props();
 
 	let view = $_view;
 	let year = view.year;
 	let month = view.month;
 	let day = view.day;
 
-	let labels, chartdata;
+	let labels = $state(null), chartdata = $state(null);
 
 	let date = new Date(year, month, 0);
     let title = 'Strømforbrug dagligt';
-    let current, title_date;
+    let current = $state(), title_date = $state();
 	let p_disabled, n_disabled = undefined;
 
     let toLabel = (d) => {
@@ -57,8 +61,12 @@
 		view.month = current;
 	}
 
-	$: monthChart(current);
-	$: setDay(detail_link);
+	run(() => {
+		monthChart(current);
+	});
+	run(() => {
+		setDay(detail_link);
+	});
 
 </script>
 
@@ -72,7 +80,7 @@
 </style>
 
 
-<div class='graph' on:click={() => ($_active='day')} on:keydown={() => ($_active='day')} role="link" tabindex="0">
+<div class='graph' onclick={() => ($_active='day')} onkeydown={() => ($_active='day')} role="link" tabindex="0">
 	<Chart {chartdata} {labels} label={title_date} {title} bind:detail_link/>
 </div>
 
@@ -82,7 +90,7 @@
 	<div class="join">
 	{#each Array(12) as _, index (index)}
 			{#if index < 12}
-				<button class="join-item btn btn-md {current === toLabel(index+1) ? 'btn-active' : ''}" on:click={() => (current = toLabel(index+1))}>{toLabel(index+1)}</button>
+				<button class="join-item btn btn-md {current === toLabel(index+1) ? 'btn-active' : ''}" onclick={() => (current = toLabel(index+1))}>{toLabel(index+1)}</button>
 			{/if}
 	{/each} 	 	 	
 </div>

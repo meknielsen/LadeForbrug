@@ -8,9 +8,9 @@
     // import UploadData from '$lib/components/UploadData.svelte'
     import {_data, _view, _active} from '$lib/stores.js';
 
-    export let data;
+    let { data } = $props();
 
-    let detail_link;
+    let detail_link = $state();
     
     
 

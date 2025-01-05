@@ -9,7 +9,7 @@
     import {_data, _view, _active} from '$lib/stores.js';
     import { goto } from '$app/navigation';
 
-    export let data;
+  let { data } = $props();
 
     let detail_link;
 
@@ -29,4 +29,4 @@
         <button class="btn btn-primary">Get Started</button>
       </div>
     </div>
-  </div>
+</div>

@@ -6,7 +6,13 @@
         import { onMount } from 'svelte';
         import { numberString } from '$lib/utils.js';
      
-        export let chartdata, labels, label, title, detail_link;
+    let {
+        chartdata,
+        labels,
+        label,
+        title,
+        detail_link = $bindable()
+    } = $props();
     
         let myChart, y_value = '';
     
@@ -124,6 +130,7 @@
     </style>
     
     <div class="chart">
-        <canvas use:makeChart={chartdata} width="3" height="1" />
+        <canvas use:makeChart={$state.snapshot(chartdata)} width="3" height="1"></canvas>
     </div>
     
+    <!-- {$state.snapshot(dataToGraph)} -->
