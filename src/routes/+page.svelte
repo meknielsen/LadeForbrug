@@ -1,21 +1,22 @@
 <script>
 // @ts-nocheck
-    import Year from '$lib/components/Year.svelte'
-    import Month from '$lib/components/Month.svelte'
-    import Day from '$lib/components/Day.svelte'
-    import Settings from '$lib/components/Settings.svelte'
-    import Summary from '$lib/components/Summary.svelte'
-    // import UploadData from '$lib/components/UploadData.svelte'
-    import {_data, _view, _active} from '$lib/stores.js';
-    import { goto } from '$app/navigation';
+  import Year from '$lib/components/Year.svelte'
+  import Month from '$lib/components/Month.svelte'
+  import Day from '$lib/components/Day.svelte'
+  import Settings from '$lib/components/Settings.svelte'
+  import Summary from '$lib/components/Summary.svelte'
+  // import UploadData from '$lib/components/UploadData.svelte'
+  import {_data, _view, _active} from '$lib/stores.js';
+  import { goto } from '$app/navigation';
 
   let { data } = $props();
 
-    let detail_link;
+  let detail_link;
 
-    $_data = data;
+  $_data = data;
 
-    
+  // For testing of login logic
+  let loggedIn = false;
 
 </script>
 
@@ -26,7 +27,17 @@
         <p class="py-6">
           Få et nemt og tydeligt oversigt over strømforbrug til elbil hjemmelader fra OK. 
         </p>
-        <button class="btn btn-primary">Get Started</button>
+        <div class="flex justify-center space-x-4">
+          <button class="btn btn-primary">Register</button>
+          <button class="btn btn-accent">Login</button>
+        </div>
+        
       </div>
     </div>
+</div>
+
+<div class="flex w-full flex-col lg:flex-row">
+  <div class="card bg-base-300 rounded-box grid h-32 flex-grow place-items-center">content</div>
+  <div class="divider lg:divider-horizontal">OR</div>
+  <div class="card bg-base-300 rounded-box grid h-32 flex-grow place-items-center">content</div>
 </div>

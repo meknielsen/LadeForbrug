@@ -1,11 +1,10 @@
-<!-- @migration-task Error while migrating Svelte code: Event attribute must be a JavaScript expression, not a string
-https://svelte.dev/e/attribute_invalid_event_handler -->
 <script>
   // @ts-nocheck
     
     import "../app.pcss";
     import { _active, _view } from '$lib/stores.js';
     import Icon from '@iconify/svelte';
+    import { page } from "$app/stores";
   /**
    * @typedef {Object} Props
    * @property {import('svelte').Snippet} [children]
@@ -20,6 +19,9 @@ https://svelte.dev/e/attribute_invalid_event_handler -->
   let popupAdd = false;
   let value = $state();
   let loading = $state(false);
+
+  // For testing of login logic
+  // let loggedIn = false;
 
   $_active = 'year';
   let activeView = (s) => {
@@ -44,20 +46,28 @@ https://svelte.dev/e/attribute_invalid_event_handler -->
     <div class="navbar-start">
       <a href="/" class="btn btn-ghost text-xl" >Ladeforbrug</a>
     </div>
+    {#if $page.data.session}
     <div class="navbar-center">
       <a class="btn btn-ghost" href={null} onclick={() => activeView('summary')} onkeydown={() => activeView('summary')}>Home</a>
       <a class="btn btn-ghost"href={null} onclick={() => activeView('year')}>År</a>
       <a class="btn btn-ghost" href={null} onclick={() => activeView('month')}>Måned</a>
       <!-- <a class="btn btn-ghost" on:click={() => activeView('day')}>Dag</a> -->
     </div>
+    {/if}
 
     <!-- Dropdown logic START ... -->
+    {#if $page.data.session}
     <div class="flex justify-end flex-1 px-2">
         <div class="flex items-stretch">
           <div class="dropdown dropdown-end" >
-            <div tabindex="0" role="button" class="btn btn-ghost rounded-btn modal-button">
-                <Icon icon="mdi:settings-outline" class="w-4 h-4 me-2" />
-            </div>
+            <!-- <div tabindex="0" role="button" class="btn btn-ghost rounded-full neutral-content"> -->
+                <!-- <Icon icon="mdi:settings-outline" class="w-4 h-4 me-2" /> -->
+                <div tabindex="0" href={null} role="button" class="avatar placeholder">
+                  <div class="bg-neutral-content text-neutral-content w-12 rounded-full">
+                    <span>SY</span>
+                  </div>
+                </div>
+            <!-- </div> -->
             <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
             <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
               <li ><a href={null} onclick={() => { activeView('settings'); onclick= () => document.activeElement.blur()}} onkeydown= {() => document.activeElement.blur()}>Settings</a></li> 
@@ -83,11 +93,22 @@ https://svelte.dev/e/attribute_invalid_event_handler -->
                      </div>
                 </div>
               </dialog>
+              <li><a href={null} onclick={() => {document.activeElement.blur(); }} onkeydown={() => document.activeElement.blur()}>Logout</a></li>
             </ul>
           </div>
         </div>
     </div>
-    <!-- Dropdown logic END ... -->
+    {:else}
+    <div class="flex justify-end flex-1 px-2">
+      <div class="flex items-stretch">
+        <!-- <div class="dropdown dropdown-end" > -->
+          <div tabindex="0" role="button" class="btn btn-ghost rounded-full neutral-content">
+             <!-- <button class="btn btn-primary">Login</button> -->
+              Login
+          </div>
+      </div>
+  </div>
+    {/if}
 </div>
 
 <div class="flexor-content">

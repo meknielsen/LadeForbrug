@@ -7,9 +7,6 @@ import { CONNREFUSED } from 'dns';
 import { MongoClient, ObjectId } from 'mongodb';
 import {_user} from '$lib/stores.js';
 
-
-
-
 // Should be taken from env
 const uri = "mongodb+srv://dbuser:c9xVny1kebf8Qsgg@cluster0.h3vfwbk.mongodb.net/";
 const client = new MongoClient(uri);
@@ -42,6 +39,8 @@ export async function load({params}) {
 	let objectID;
 	let years = {};
 
+	let loggedIn = true;
+
 	// const user_email = 'mek.nielsen@gmail.com';
 	
 	if (params.oid.length === 24) {
@@ -64,7 +63,8 @@ export async function load({params}) {
     return {
         years,
         refusion_data, 
-        objectID
+        objectID, 
+		loggedIn
     };
 }
 
@@ -103,8 +103,3 @@ export const actions = {
 	  }
 	}
 }
-  
-//   async function storeData(data) {
-
-
-//   }
