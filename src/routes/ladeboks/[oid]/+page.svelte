@@ -12,8 +12,6 @@
 
     let detail_link = $state();
     
-    
-
     $_data = data;
 
     console.log($_data.loggedIn)

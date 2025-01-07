@@ -9,7 +9,12 @@
 	"/api/settings/[year]": [
 		"src/routes/api/settings/[year]/+server.js"
 	],
-	"/[oid]": [
-		"src/routes/[oid]/+page.server.js"
+	"/ladeboks": [
+		"src/routes/ladeboks/+layout.server.js",
+		"src/routes/ladeboks/+layout.server.js"
+	],
+	"/ladeboks/[oid]": [
+		"src/routes/ladeboks/[oid]/+page.server.js",
+		"src/routes/ladeboks/+layout.server.js"
 	]
 }
