@@ -14,7 +14,7 @@
     
     $_data = data;
 
-    console.log($_data.loggedIn)
+    // console.log($_data.loggedIn)
 
     if ( Object.keys($_data.refusion_data).length === 0) console.log('no refusion data')
 

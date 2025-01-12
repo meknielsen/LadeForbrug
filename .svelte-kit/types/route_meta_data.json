@@ -1,17 +1,14 @@
 {
 	"/": [],
-	"/api/load": [
-		"src/routes/api/load/+server.js"
-	],
-	"/api/settings": [
-		"src/routes/api/settings/+server.js"
-	],
-	"/api/settings/[year]": [
-		"src/routes/api/settings/[year]/+server.js"
-	],
 	"/ladeboks": [
 		"src/routes/ladeboks/+layout.server.js",
 		"src/routes/ladeboks/+layout.server.js"
+	],
+	"/ladeboks/api/settings": [
+		"src/routes/ladeboks/api/settings/+server.js"
+	],
+	"/ladeboks/api/settings/[year]": [
+		"src/routes/ladeboks/api/settings/[year]/+server.js"
 	],
 	"/ladeboks/[oid]": [
 		"src/routes/ladeboks/[oid]/+page.server.js",

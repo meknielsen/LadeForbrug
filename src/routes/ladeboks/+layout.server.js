@@ -52,7 +52,7 @@ export async function load({}) {
         // years = rest;
     // } 
 
-    console.log(user_data)
+    // console.log(user_data)
 
     // Ensures that the client will close when you finish/error
     // await client.close(); // Do not close here ... it will disrupt when loading file data

@@ -16,6 +16,8 @@ const chargingData = database.collection('chargingData');
 const refusionData = database.collection('refusionData');
 const userData = database.collection('userData');
 const options = {projection: { _id: 1}  };
+
+let paramsOID;
 // var objectID;
 
 /** @param {Parameters<import('./$types').PageServerLoad>[0]} event */
@@ -48,13 +50,16 @@ export async function load({params}) {
 		years_data = JSON.parse(JSON.stringify(await chargingData.findOne({_id: new ObjectId(params.oid)})));
 		user_data = JSON.parse(JSON.stringify(await userData.findOne({email: 'mek.nielsen@gmail.com'}, {})));
 		refusion_data = await refusionData.findOne({}, {projection: {_id:0}});
-		let objectID = years_data._id;
+		objectID = years_data._id;
 		const { _id, ...rest } = years_data;
 		years = rest;
+
+		paramsOID = objectID;
 	} 
 
-    console.log(params.oid)
-	console.log(user_data)
+    // console.log(params.oid)
+	// console.log(user_data)
+	// console.log(objectID)
 
     
 
@@ -93,8 +98,8 @@ export const actions = {
 		}
 		
 		c_data = merge(c_data, n_data);
-
-		const result = await chargingData.updateOne({_id: new ObjectId(params.oid)}, {$set: c_data})
+		// objectID should be replaced with params.oid
+		const result = await chargingData.updateOne({_id: new ObjectId(paramsOID)}, {$set: c_data})
 
 		return {  };
 

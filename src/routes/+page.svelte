@@ -20,6 +20,15 @@
 
 </script>
 
+<div>
+<select class="select select-bordered w-full max-w-xs">
+  <option disabled selected>Who shot first?</option>
+  <option>Han Solo</option>
+  <option>Greedo</option>
+</select>
+</div>
+
+
 <div class="hero bg-base-200 min-h-screen">
     <div class="hero-content text-center">
       <div class="max-w-md">
@@ -36,8 +45,10 @@
     </div>
 </div>
 
-<div class="flex w-full flex-col lg:flex-row">
+
+
+<!-- <div class="flex w-full flex-col lg:flex-row">
   <div class="card bg-base-300 rounded-box grid h-32 flex-grow place-items-center">content</div>
   <div class="divider lg:divider-horizontal">OR</div>
   <div class="card bg-base-300 rounded-box grid h-32 flex-grow place-items-center">content</div>
-</div>
+</div> -->

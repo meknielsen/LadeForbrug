@@ -21,7 +21,7 @@
   let loading = $state(false);
 
   // For testing of login logic
-  // let loggedIn = false;
+  let loggedIn = true;
 
   $_active = 'year';
   let activeView = (s) => {
@@ -37,6 +37,7 @@
     };
   }
     
+ 
 </script>
     
 <style>
@@ -46,7 +47,8 @@
     <div class="navbar-start">
       <a href="/" class="btn btn-ghost text-xl" >Ladeforbrug</a>
     </div>
-    {#if $page.data.session}
+    <!-- {#if $page.data.session} -->
+    {#if loggedIn}
     <div class="navbar-center">
       <a class="btn btn-ghost" href={null} onclick={() => activeView('summary')} onkeydown={() => activeView('summary')}>Home</a>
       <a class="btn btn-ghost"href={null} onclick={() => activeView('year')}>År</a>
@@ -56,7 +58,8 @@
     {/if}
 
     <!-- Dropdown logic START ... -->
-    {#if $page.data.session}
+    <!-- {#if $page.data.session} -->
+    {#if loggedIn}
     <div class="flex justify-end flex-1 px-2">
         <div class="flex items-stretch">
           <div class="dropdown dropdown-end" >
@@ -70,7 +73,7 @@
             <!-- </div> -->
             <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
             <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
-              <li ><a href={null} onclick={() => { activeView('settings'); onclick= () => document.activeElement.blur()}} onkeydown= {() => document.activeElement.blur()}>Settings</a></li> 
+              <li ><a href={null} onclick={() => { activeView('settings')}} >Settings</a></li> 
               <li><a href={null} onclick={() => { activeView('summary'); document.activeElement.blur(); }} onkeydown={() => document.activeElement.blur()}>Summary</a></li>
               <!-- UPLOAD file section -->
               <li ><a href={null} onclick={() => load_data.showModal()}>Load Data</a></li>
