@@ -14,11 +14,11 @@
     {data.user.email}
 </p>
 <p>
-    {data.user._id}
+    User id is:{data.user._id}
 </p>
-
-<select class="select select-bordered w-full max-w-xs">
-    <option disabled selected>Who shot first?</option>
-    <option>Han Solo</option>
-    <option>Greedo</option>
-  </select>
+<p>
+    Data is: {data.user.chargers[0].id}
+</p>
+<p>
+    Refusion data is: {data.user.chargers[0].refusion_id}
+</p>

@@ -33,26 +33,8 @@ const options = {projection: { _id: 1}  };
  */
 export async function load({}) {
 
-    let years_data = {};
-    let user_data = {};
-    let refusion_data = {};
-    let objectID;
-    let years = {};
+    let user_data = JSON.parse(JSON.stringify(await userData.findOne({email: 'mek.nielsen@gmail.com'}, {})));
 
-    let loggedIn = true;
-
-    // const user_email = 'mek.nielsen@gmail.com';
-    
-    // if (params.oid.length === 24) {
-        // years_data = JSON.parse(JSON.stringify(await chargingData.findOne({_id: new ObjectId(params.oid)})));
-        user_data = JSON.parse(JSON.stringify(await userData.findOne({email: 'mek.nielsen@gmail.com'}, {})));
-        // refusion_data = await refusionData.findOne({}, {projection: {_id:0}});
-        // let objectID = years_data._id;
-        // const { _id, ...rest } = years_data;
-        // years = rest;
-    // } 
-
-    // console.log(user_data)
 
     // Ensures that the client will close when you finish/error
     // await client.close(); // Do not close here ... it will disrupt when loading file data

@@ -9,19 +9,22 @@
     let { data } = $props();
 
     let refusion_data = [];
+
     let today = new Date();
 
-    let year = $state('2024')
-    // $state(today.getFullYear().toString());
-    console.log('year is: ' + today.getFullYear().toString())
+    let year = $state(today.getFullYear().toString());
     let new_year = $state();
+
     let years = $state([]);
     let isDisabled = $state(true);
 
-    let value;
+    // should be set to 'last year' if current year has no data
+    // svelte-ignore state_referenced_locally
+    let value = '2024';
+
     let open = false;
     let locale = 'DK';    
-    let _values = ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'];
+    let _values = $state(['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0']);
     let popupDelete = false;
     let popupAdd = false;
 
@@ -30,19 +33,19 @@
      * @param year Year
      * @param month Month
      */
-    let set_refusion_data = async (year) => {
-        await fetch(`ladeboks/api/settings/${year}/`, {
+    let set_refusion_data = async (y) => {
+        await fetch(`api/settings/${y}/`, {
             method: 'PUT',
             headers: {
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify(refusion_data[year])
+            body: JSON.stringify(refusion_data[y])
         });
     }
 
     let add_year = async (y) => {
         get_refusion_data(y);
-        await fetch(`ladeboks/api/settings/${y}/`, {
+        await fetch(`api/settings/${y}/`, {
             method: 'PUT',
             headers: {
                 'Content-type': 'application/json'
@@ -54,21 +57,19 @@
     }
 
     let delete_year = async (y) => {
-        await fetch(`ladeboks/api/settings/${y}/`, {
+        await fetch(`api/settings/${y}/`, {
             method: 'DELETE',
             headers: {
                 'Content-type': 'application/json'
             },
         });
-        // value = today.getFullYear().toString();
         get_refusion_data(y);
-        year = today.getFullYear().toString(); //was =value;
+        year = value;
         years = years.filter(e => e.value !== `${y}`);
     }
 
     let get_refusion_data = async (y) => {
         refusion_data = await fetch(`api/settings/`).then((r) => r.json());
-        // console.log(refusion_data);
         for (let i = 0; i < Object.keys(refusion_data).length; i++ ) {
             years[i] = { value: Object.keys(refusion_data)[i], name: Object.keys(refusion_data)[i]}
             if ( Object.keys(refusion_data)[i] === y ) {
@@ -81,8 +82,6 @@
                 }
             }
         }
-        // console.log(_values); //ok
-        console.log($state.snapshot(years))
     }
 
     let update_refusion_data = (d) => {
@@ -95,7 +94,6 @@
             }
         }
         data.refusion_data[year] = refusion_data[year] = values;
-        // data.refusion_data[year] = values
     }
 
     let activeView = (s) => {
@@ -103,9 +101,7 @@
     }
 
     let validate_input = (y) => {
-        // isDisabled = !isNaN(y) && y.length === 4 && Number(y) >= 2020 && !Object.keys(refusion_data).includes(y);
-        // return isDisabled;
-        return true;
+        return !isNaN(y) && y.length === 4 && Number(y) >= 2020 && !Object.keys(refusion_data).includes(y);
     }
 
     function preventDefault(fn) {
@@ -115,13 +111,9 @@
         };
     }
 
- 
-
     run(() => get_refusion_data(year));
     run(() => update_refusion_data(_values));
-    // run(() => year = value); //does not work
-    // svelte-ignore state_referenced_locally
-        console.log(year)
+    run(() => year = value); 
 
 </script>
 
@@ -129,7 +121,6 @@
 </style>
 
 <div class="flex flex-row pt-16">
-    
     <div class="basis-1/12"></div>
     <div class="basis-1/12 min-w-32">
         <label for="search" class="block w-32">
@@ -140,10 +131,9 @@
                 {#each years as year}
                     <option>{year.name}</option>
                 {/each}
-              </select>
+            </select>
         </label>
     </div>
-
     <div class="basis-1/12 mt-8 min-w-16">
         <button class="btn-circle hover:base-100" onclick={()=> {addYear.showModal(); new_year =""}} ><Icon icon="mdi:plus-circle-outline" class="w-6 h-6 me-2 mt-3 ms-3" /></button>
         <dialog id="addYear" class="modal">
@@ -154,14 +144,92 @@
                         <input type="text" name="add_year" class="input input-bordered w-full max-w-xs" placeholder="" bind:value={new_year} />
                         <p class="mt-2 text-xs {validate_input(new_year) ? 'text-green-600' : 'text-red-500'} font-light ml-1 p-0" >Must be a valid, non-existing year after 2020.</p>
                         <div class="flex h-10 pt-2 m-2 justify-center"></div>
-                        <!-- <button class="btn btn-primary min-w-20 mr-2" onclick={() => add_year(new_year)} disabled={!isDisabled}>Add</button> -->
+                        <button class="btn btn-primary min-w-20 mr-2" onclick={() => add_year(new_year)} disabled={!isDisabled}>Add</button>
                         <button class="btn btn-accent min-w-20" onclick={() => addYear.close()}>Cancel</button>
                     </form>
                 </div>
             </div>
         </dialog>
     </div>
-
-        
+    <div class="basis-6/12 flex">
+        {#each months({locale}) as month, index (index)}
+            {#if index<6}
+            <div class="p-1 min-w-28">
+                <label class="form-control w-full max-w-xs mb-2" for="input-sm">
+                    <div class="label">
+                        <span class="label-text">{month}</span>
+                    </div>
+                    <input class="input input-bordered w-full max-w-xs" id="input-sm" type="text" placeholder="0,00" bind:value={_values[index]}/>
+                </label>
+            </div>
+            {/if}
+        {/each}
+    </div>
+    <div class="basis-2/12">
+    </div>
+    <div class="basis-1/12">
+        <button class="btn-circle hover:base-100" onclick={() => activeView('year')}>
+            <Icon icon="mdi:close-circle-outline" class="w-6 h-6" />
+        </button>
+    </div>      
 </div>
 
+<div class="flex flex-row">
+    <div class="basis-1/12"></div>
+    <div class="basis-1/12 min-w-32"></div>
+    <div class="basis-1/12 min-w-16"></div>
+    <div class="basis-6/12 flex">
+        {#each months({locale}) as month, index (index)}
+            {#if index>5}
+                <div class="p-1 min-w-28">
+                    <label class="form-control w-full max-w-xs mb-2" for="input-sm">
+                        <div class="label">
+                            <span class="label-text">{month}</span>
+                        </div>
+                        <input class="input input-bordered w-full max-w-xs" id="input-sm" type="text" placeholder="0,00" bind:value={_values[index]}/>
+                    </label>
+                </div>
+            {/if}
+        {/each}
+    </div>
+    <div class="basis-3/12">
+    </div>
+</div>
+
+<div class="flex flex-row">
+    <div class="basis-1/12"></div>
+    <div class="basis-1/12 min-w-32"></div>
+    <div class="basis-1/12 min-w-16"></div>
+    <div class="basis-1/12 flex">
+        <div class="m-1 p-1 pt-10 mr-6 w-12">
+            <button class="btn btn-primary" onclick={()=>set_refusion_data(year)}>Save</button>
+        </div>
+        <div class="m-1 pt-10 w-12">
+            <button class="btn btn-secondary" onclick={() => {deleteYear.showModal(); (new_year ="")}}>Delete</button>
+            <dialog id="deleteYear" class="modal">
+                <div class="modal-box w-96">
+                    <form method="dialog">
+                        <!-- <p class="mb-5 text-md font-normal text-gray-400">This will delete the year {year} and all the monthly refusion data registered. </p> -->
+                        <div role="alert" class="alert alert-warning mb-4">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              class="h-6 w-6 shrink-0 stroke-current"
+                              fill="none"
+                              viewBox="0 0 24 24">
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span class="flex flex-row"><div class="font-bold">Warning!</div>This will delete the year {year} and all the monthly refusion data registered.</span>
+                        </div>
+                        <button class="btn btn-secondary me-2"onclick={() => (delete_year(year))}>Delete</button>
+                        <button class="btn btn-primary" onclick={preventDefault(deleteYear.close())}>Cancel</button> 
+                    </form>
+                </div>
+            </dialog>
+        </div>
+    </div>
+    <div class="basis-8/12"></div>
+</div>
