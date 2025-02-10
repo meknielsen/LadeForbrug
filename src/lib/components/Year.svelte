@@ -18,6 +18,8 @@
 	let mode = 'year';
 	let title = 'Strømforbrug månedligt'
     let title_date = $state($_view.year);
+	let today = new Date();
+	let latest_year = 0;
 
 	detail_link = undefined;
 
@@ -39,13 +41,15 @@
 	let setYear = (y) => {
 		$_view.year = y;
 	}
+
+	// Make sure we view the latest year with charging data
+	for ( let i = 0; i < Object.keys(data.years).length; i++ ) {
+		if (Object.keys(data.years)[i] > latest_year) latest_year =  Object.keys(data.years)[i];
+	}
 	
-	run(() => {
-		yearChart($_view.year);
-	});
-	run(() => {
-		setMonth(detail_link);
-	});
+	run(() => { setYear(latest_year); });
+	run(() => { yearChart($_view.year); });
+	run(() => { setMonth(detail_link); });
 
 </script>
 

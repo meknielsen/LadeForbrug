@@ -15,6 +15,7 @@
     $_data = data;
 
     // console.log($_data.loggedIn)
+    // console.log($_view.year)
 
     if ( Object.keys($_data.refusion_data).length === 0) console.log('no refusion data')
 
