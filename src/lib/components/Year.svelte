@@ -25,7 +25,13 @@
 
     let yearChart = (y) => {
 		let d = getChartYearData(data.years, `${y}`);
-		let r = convertMonthDate(data.refusion_data[`${y}`]) 
+		let r;
+		// If year is not existing in refusion datastore, then set refusion_data to 0
+		if ( Object.hasOwn(data.refusion_data, y) ) {
+			r = convertMonthDate(data.refusion_data[`${y}`]) 
+		} else {
+			r = ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'];
+		}
 		// The map() method of Array instances creates a new array populated with the results of calling a provided function on every element in the calling array.
 		// Below is an operator on strings, and since the subtraction operator is used, the string numbers are converted into numbers
 		chartdata = [d[0][0], d[0][1].map((v, i) => v - r[i]), r];

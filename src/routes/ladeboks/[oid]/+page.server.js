@@ -16,8 +16,8 @@ const refusionData = database.collection('refusionData');
 const userData = database.collection('userData');
 const options = {projection: { _id: 1}  };
 
-let paramsOID;
-// var objectID;
+var paramsOID;
+var objectID;
 
 /** @type {import('./$types').PageServerLoad} */
 /**
@@ -38,7 +38,7 @@ export async function load({params}) {
 	let years_data = {};
 	let user_data = {};
 	let refusion_data = {};
-	let objectID;
+	// let objectID;
 	let years = {};
 
 	let loggedIn = true;
@@ -91,6 +91,8 @@ export const actions = {
 			for ( let i = 0; i < Object.keys(n).length; i++ ) {
 				if ( c.hasOwnProperty(Object.keys(n)[i])) {				
 					c[Object.keys(n)[i]] = {...c[Object.keys(n)[i]], ...n[Object.keys(n)[i]]}
+				} else {
+					// c[Object.keys(n)[i]] = {...n[Object.keys(n)[i]]}
 				}
 			}
 			return c;
@@ -98,6 +100,10 @@ export const actions = {
 		
 		c_data = merge(c_data, n_data);
 		// objectID should be replaced with params.oid
+		// console.log(objectID)
+		// console.log(paramsOID)
+		// console.log(c_data)
+		// console.log(Object.keys(c_data))
 		const result = await chargingData.updateOne({_id: new ObjectId(paramsOID)}, {$set: c_data})
 
 		return {  };
