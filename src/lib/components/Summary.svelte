@@ -3,7 +3,7 @@
 
     import { getChartYearData, getLatestDataDate, totalYear } from '$lib/chartData.js';
     import Icon from '@iconify/svelte';
-    import { _active, _view } from '$lib/stores.js';
+    import { _active, _view } from '$lib/stores.svelte.js';
   
   let { data } = $props();
 
@@ -49,10 +49,10 @@
                                 <div class="stats shadow">
                                     <div class="stat place-items-right">
                                         <div class="stat-figure text-secondary">
-                                            <Icon icon="mdi:home-battery" class="w-8 h-8 me-2 text-secondary" />
+                                            <Icon icon="mdi:home-battery" class="w-8 h-8 me-2 text-info" />
                                         </div>
                                         <div class="stat-title text-left">Total charging usage</div>
-                                        <div class="stat-value text-secondary">DKK {total_charging(year)}</div>
+                                        <div class="stat-value text-info">DKK {total_charging(year)}</div>
                                     </div>
                                 </div>
                                 <div class="stats shadow">
@@ -70,4 +70,4 @@
                 </div>
             {/each}
     </div>
-</div>
+</div>  

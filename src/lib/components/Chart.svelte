@@ -1,7 +1,7 @@
 <script>
 // @ts-nocheck
 
-    import {_view} from '$lib/stores.js';
+    import {_view} from '$lib/stores.svelte.js';
     import Chart from 'chart.js/auto';
     import { onMount } from 'svelte';
     import { numberString } from '$lib/utils.js';

@@ -1,7 +1,7 @@
 <script>
     // @ts-nocheck
     
-        import {_view} from '$lib/stores.js';
+        import {_view} from '$lib/stores.svelte.js';
         import Chart from 'chart.js/auto';
         import { onMount } from 'svelte';
         import { numberString } from '$lib/utils.js';
@@ -41,21 +41,25 @@
                             label: 'Lader',
                             data: data[1],
                             backgroundColor: [
-                                "rgba(255, 99, 132, 0.2)",
+                                // "rgba(255, 99, 132, 0.2)",
+                                'rgba(75, 192, 192, 0.2)'
                             ],
                             borderColor: [
-                                "rgba(255, 99, 132, 1)",
+                                // "rgba(255, 99, 132, 1)",
+                                'rgb(75, 192, 192)',
                             ],
                             borderWidth: 1,
                         },
                         {
-                            label: 'Charging',
+                            label: 'Refusion',
                             data: data[2],
                             backgroundColor: [
-                                'rgba(75, 192, 192, 0.2)'
+                                // 'rgba(75, 192, 192, 0.2)'
+                                "rgba(255, 99, 132, 0.2)",
                             ],
                             borderColor: [
-                                'rgb(75, 192, 192)',
+                                // 'rgb(75, 192, 192)',
+                                "rgba(255, 99, 132, 1)",
                             ],
                             borderWidth: 1,
                         }

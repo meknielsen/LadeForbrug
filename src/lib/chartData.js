@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { months, numberString } from '$lib/utils.js';
-import {_active} from '$lib/stores.js';
+import {_active} from '$lib/stores.svelte.js';
 
 export function getChartDayData(day_obj, treshold) {
 

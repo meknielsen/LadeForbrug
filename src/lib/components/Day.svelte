@@ -7,7 +7,7 @@
 
 	/** @type {import('./$types').PageData} */
 
-	import {_view, _active, _treshold} from '$lib/stores.js';
+	import {_view, _active, _treshold} from '$lib/stores.svelte.js';
 	import Chart from "$lib/components/Chart.svelte";
 	import {getChartDayData} from '$lib/chartData.js';
 	import Icon from '@iconify/svelte';

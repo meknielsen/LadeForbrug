@@ -1,17 +1,27 @@
 {
+	"/(app)": [
+		"src/routes/(app)/+page.server.js"
+	],
 	"/": [],
-	"/ladeboks": [
-		"src/routes/ladeboks/+layout.server.js",
-		"src/routes/ladeboks/+layout.server.js"
+	"/(authed)/ladeboks": [
+		"src/routes/(authed)/ladeboks/+page.server.js",
+		"src/routes/(authed)/ladeboks/+layout.server.js",
+		"src/routes/(authed)/ladeboks/+layout.server.js"
 	],
-	"/ladeboks/api/settings": [
-		"src/routes/ladeboks/api/settings/+server.js"
+	"/(authed)/ladeboks/api/settings": [
+		"src/routes/(authed)/ladeboks/api/settings/+server.js"
 	],
-	"/ladeboks/api/settings/[year]": [
-		"src/routes/ladeboks/api/settings/[year]/+server.js"
+	"/(authed)/ladeboks/api/settings/[year]": [
+		"src/routes/(authed)/ladeboks/api/settings/[year]/+server.js"
 	],
-	"/ladeboks/[oid]": [
-		"src/routes/ladeboks/[oid]/+page.server.js",
-		"src/routes/ladeboks/+layout.server.js"
+	"/(authed)/ladeboks/[oid]": [
+		"src/routes/(authed)/ladeboks/[oid]/+page.server.js",
+		"src/routes/(authed)/ladeboks/+layout.server.js"
+	],
+	"/login": [
+		"src/routes/login/+page.server.js"
+	],
+	"/logout": [
+		"src/routes/logout/+page.server.js"
 	]
 }

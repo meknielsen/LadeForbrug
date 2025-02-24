@@ -3,7 +3,7 @@
 
     import { months, numberString } from '$lib/utils.js';
     import Icon from '@iconify/svelte';
-    import { _active } from '$lib/stores.js';
+    import { _active } from '$lib/stores.svelte.js';
     import { run } from 'svelte/legacy';
 
     let { data } = $props();

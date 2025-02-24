@@ -7,7 +7,7 @@
 
 	import Chart from "$lib/components/Chart.svelte";
 	import { getChartMonthData, getChartYearData, getLatestDataDate, totalMonth } from '$lib/chartData.js';
-	import {_view, _active, _treshold} from '$lib/stores.js';
+	import {_view, _active, _treshold} from '$lib/stores.svelte.js';
 
 	let { data, detail_link = $bindable() } = $props();
 

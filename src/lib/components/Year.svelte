@@ -9,7 +9,7 @@
 
 	import YearChart from "$lib/components/YearChart.svelte";
 	import { getChartYearData, getLatestDataDate, totalYear } from '$lib/chartData.js';
-	import {_view, _active, _treshold} from '$lib/stores.js';
+	import {_view, _active, _treshold} from '$lib/stores.svelte.js';
 	import { convertMonthDate } from "$lib/utils";
 
 	let { data, detail_link = $bindable() } = $props();
