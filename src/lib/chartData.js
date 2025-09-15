@@ -148,7 +148,7 @@ export function totalYear(data_obj, year, treshold) {
     charging_total += parseFloat(totalMonth(data_obj, year, [numberString(i+1)], treshold)[1]);
   }
 
-  return [total, charging_total];
+  return [total, charging_total, total + charging_total];
 
 }
 

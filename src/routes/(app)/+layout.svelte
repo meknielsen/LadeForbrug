@@ -20,8 +20,10 @@
         <!-- <div class="dropdown dropdown-end" > -->
           <!-- <div tabindex="0" role="button" class="btn btn-ghost rounded-full bg-accent text-primary-content"> -->
             <div tabindex="0" role="button" >
-              
-             <button class="btn btn-ghost bg-accent text-primary-content">Login</button>
+              <form method="POST" action = "?/login">
+            <button class="btn btn-accent">Login</button>
+          </form>
+             <!-- <button class="btn btn-ghost bg-accent text-primary-content">Login</button> -->
               <!-- Login -->
           </div>
       </div>

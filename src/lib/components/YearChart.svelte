@@ -30,23 +30,12 @@
                             label: 'Home',
                             data: data[0],
                             backgroundColor: [
-                                "rgba(54, 162, 235, 0.2)",
+                                // "rgba(54, 162, 235, 0.2)",
+                                "rgba(0, 169, 110, 0.2)",
                             ],
                             borderColor: [
-                                "rgba(54, 162, 235, 1)",
-                            ],
-                            borderWidth: 1,
-                        },
-                        {
-                            label: 'Lader',
-                            data: data[1],
-                            backgroundColor: [
-                                // "rgba(255, 99, 132, 0.2)",
-                                'rgba(75, 192, 192, 0.2)'
-                            ],
-                            borderColor: [
-                                // "rgba(255, 99, 132, 1)",
-                                'rgb(75, 192, 192)',
+                                // "rgba(54, 162, 235, 1)",
+                                "rgba(0, 169, 110, 1)",
                             ],
                             borderWidth: 1,
                         },
@@ -54,15 +43,28 @@
                             label: 'Refusion',
                             data: data[2],
                             backgroundColor: [
-                                // 'rgba(75, 192, 192, 0.2)'
-                                "rgba(255, 99, 132, 0.2)",
+                                'rgba(75, 192, 192, 0.2)'
+                                // "rgba(255, 99, 132, 0.2)",
                             ],
                             borderColor: [
-                                // 'rgb(75, 192, 192)',
-                                "rgba(255, 99, 132, 1)",
+                                'rgb(75, 192, 192)',
+                                // "rgba(255, 99, 132, 1)",
                             ],
                             borderWidth: 1,
-                        }
+                        },
+                        {
+                            label: 'Lader',
+                            data: data[1],
+                            backgroundColor: [
+                                "rgba(255, 99, 132, 0.2)",
+                                // 'rgba(75, 192, 192, 0.2)'
+                            ],
+                            borderColor: [
+                                "rgba(255, 99, 132, 1)",
+                                // 'rgb(75, 192, 192)',
+                            ],
+                            borderWidth: 1,
+                        },
                     ],
                 },
                 options: {
@@ -83,7 +85,7 @@
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
-                                    let label = context.dataset.label || '';
+                                    let label = context.dataset.label || '';    
                                     let date = new Date('2023', '05', '05', context.parsed.x);
     
                                     if (label) {
@@ -115,8 +117,8 @@
                     myChart.data.datasets[0].data = u[0];	
                     myChart.data.datasets[1].data = u[1];
                     myChart.data.datasets[2].data !== undefined ? myChart.data.datasets[2].data = u[2] : '';
-                    myChart.data.datasets[0].label = label;
-                    myChart.data.datasets[1].label = 'Lader';
+                    // myChart.data.datasets[0].label = label;      // Label is set in datasets above
+                    // myChart.data.datasets[1].label = 'Lader';    // Label is set in datasets above
                     myChart.update();
                     console.log(myChart.data.datasets[2].data)
                 },

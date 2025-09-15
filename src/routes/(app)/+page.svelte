@@ -3,7 +3,7 @@
   import Year from '$lib/components/Year.svelte'
   import Month from '$lib/components/Month.svelte'
   import Day from '$lib/components/Day.svelte'
-  import Settings from '$lib/components/Settings.svelte'
+  import Settings from '$lib/components/Settings_new.svelte' //_new
   import Summary from '$lib/components/Summary.svelte'
   // import UploadData from '$lib/components/UploadData.svelte'
   import {_data, _view, _active, user} from '$lib/stores.svelte.js';
@@ -29,9 +29,9 @@
         </p>
         <div class="flex justify-center space-x-4">
           <button class="btn btn-primary">Register</button>
-          <form method="POST" action = "?/login">
+          <!-- <form method="POST" action = "?/login">
             <button class="btn btn-accent">Login</button>
-          </form>
+          </form> -->
 
           <!-- <form method="POST" action="/logout">
             <button>log out</button>

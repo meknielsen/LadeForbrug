@@ -3,7 +3,7 @@
     import Year from '$lib/components/Year.svelte'
     import Month from '$lib/components/Month.svelte'
     import Day from '$lib/components/Day.svelte'
-    import Settings from '$lib/components/Settings.svelte'
+    import Settings from '$lib/components/Settings_new.svelte' //_new
     import Summary from '$lib/components/Summary.svelte'
     // import UploadData from '$lib/components/UploadData.svelte'
     import {_data, _view, _active} from '$lib/stores.svelte.js';
@@ -25,7 +25,7 @@
 
 
 
-<!-- End  -->
+<!-- End Logic if no account -->
 
 {#if Object.keys($_data.refusion_data).length !== 0}
 

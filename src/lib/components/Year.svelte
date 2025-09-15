@@ -34,7 +34,7 @@
 		}
 		// The map() method of Array instances creates a new array populated with the results of calling a provided function on every element in the calling array.
 		// Below is an operator on strings, and since the subtraction operator is used, the string numbers are converted into numbers
-		chartdata = [d[0][0], d[0][1].map((v, i) => v - r[i]), r];
+		chartdata = [d[0][0], r, d[0][1].map((v, i) => v - r[i])];
 		labels = d[1];
 		title_date = y;
 	}
